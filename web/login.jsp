@@ -9,18 +9,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login Page</title>
+        <title>YoYoString Login Page</title>
     </head>
     <body>
-        <h1>Welcome!</h1>    
+        <h1>YoYoString Stats</h1>   
         <%
         String failedlogin = (String)request.getAttribute("failedlogin");
             if (failedlogin!=null){%>
             <h3><%=failedlogin%></h3> 
             <%
             }
-            %>
-            
+            %>         
         
         <h2>Login Here:</h2>
         <form action="Login" method="POST">

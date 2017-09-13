@@ -9,20 +9,35 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>YoYoString Main Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>YoYoString Stats</h1>
         
         <%
-        //Welcome loggedin user
+        //Options for logged-in user
         String loggedin = (String)session.getAttribute("loggedin");
             if (loggedin!=null){%>   
             %>
             <h3>Welcome <%=loggedin%> !</h3>  
-            <%}
-            //Show User options.
+            <%
+            //Show Primary User options.
             
+
+            //Show Secondary User options.
+            %>     
+            <form action="Logout" method="GET">
+                <input type="submit" value="Logout">
+            </form>
+            <%
+             }
+        //Options for not logged-in user
+            else{ %>
+             <form action="Login" method="GET">
+              <input type="submit" value="Login">
+             </form>
+            <%
+            }
             %>
         
     </body>
