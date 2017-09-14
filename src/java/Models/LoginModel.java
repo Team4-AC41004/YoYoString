@@ -37,11 +37,11 @@ public class LoginModel {
         {
             con = DBConnection.createConnection();
             statement = con.createStatement();
-            resultSet = statement.executeQuery("SELECT ID,Password FROM user"); 
+            resultSet = statement.executeQuery("SELECT Userid,Password FROM user"); 
             
             while (resultSet.next())
             {
-                useridDB = resultSet.getInt("ID");
+                useridDB = resultSet.getInt("Userid");
                 passwordDB = resultSet.getString("Password");
 
                 if ((userid==useridDB) && password.equals(passwordDB)) 
