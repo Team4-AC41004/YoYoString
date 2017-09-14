@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Yoyo time</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        <script type="text/javascript">    
+        var queryObject="";
+        var queryObjectLen="";
+        //AJAX script which executes and retrieves data from retrievedata.jsp
+        $.ajax({
+            type:'POST',
+            url:'retrievedata.jsp',
+            dataType: 'json',
+            success: function(data){
+                queryObject = eval('('+JSON.stringify(data)+')');
+                queryObjectLen = queryObject.yoyodetails.length;
+            },
+            error:function(xhr, type){
+                alert('server error occured');
+            }
+        });
+        
+        //load in google charts and execute drawChart function
+        google.charts.load('current', {'packages':['corechart']});
+        google.setOnLoadCallback(drawChart);
+        
+
+        function drawChart(){
+            //create datatable and add columns
+            var data = new google.visualization.DataTable();
+            data.addColumn('string',"UserID");
+            
+            //iterates through the queryObject to add each record to the DataTable
+            for (var i=0;i<queryObjectLen; i++)
+            {
+                var userid = queryObject.yoyodetails[i].userid;
+                data.addRows([[userid]]);
+            }
+        var options = {title:'Yoyoyoyoyoyoyo'};
+        
+        //render datatable as chart
+        var chart = new google.visualization.Table(document.getElementById('chart_div'));
+        chart.draw(data, options);
+        }
+        </script>
+    </head>
+    <body>
+        <!--displays chart-->
+        <div id="chart_div"></div>
+    </body>
+</html>
