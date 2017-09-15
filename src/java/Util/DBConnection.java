@@ -22,12 +22,14 @@ public class DBConnection {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
 
-            con = DriverManager.getConnection("jdbc:mysql:\\silva.computing.dundee.ac.uk\\webapps\\2017-indteam4", "ip17team4", "0455.ip17t.5540");
-            if(!con.isClosed()) out.println("Success");
+            con = DriverManager.getConnection("jdbc:mysql://silva.computing.dundee.ac.uk/ip17team4db", "ip17team4", "0455.ip17t.5540");
+            
+            if(!con.isClosed()) out.println("Success connecting to DB.");
         } catch (Exception e) {
             System.out.println(e);
         }
         return con;
+        
     }
     
 }
