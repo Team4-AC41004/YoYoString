@@ -20,14 +20,21 @@ public class DBConnection {
         Connection con = null;
 
         try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-
-            con = DriverManager.getConnection("jdbc:mysql://silva.computing.dundee.ac.uk/ip17team4db", "ip17team4", "0455.ip17t.5540");
+            //Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.jdbc.Driver");
+            try{
+                con = DriverManager.getConnection("jdbc:mysql://silva.computing.dundee.ac.uk/ip17team4db", "ip17team4", "0455.ip17t.5540");
+            }
+            catch(SQLException ex){
+                System.out.println("Failed to create the database connection.");
+            }
             
-            if(!con.isClosed()) out.println("Success connecting to DB.");
-        } catch (Exception e) {
-            System.out.println(e);
+            
+            //if(!con.isClosed()) out.println("Success connecting to DB.");
+        } catch (ClassNotFoundException ex) {
+             System.out.println("Driver not found.");
         }
+        
         return con;
         
     }
