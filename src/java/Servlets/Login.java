@@ -33,15 +33,13 @@ public class Login extends HttpServlet {
         int userid = Integer.parseInt(request.getParameter("userid"));
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
-        //uncomment once DB is up
-        //LoginModel loginModel = new LoginModel(); // This class contains main logic of the feature.
+        LoginModel loginModel = new LoginModel(); // This class contains main logic of the feature.
         
         boolean sanetizeCheck = checkInput(password);
         String matched = null;
         
         if (sanetizeCheck){
-            //uncomment once DB is up
-            //matched = loginModel.authenticateLogin(userid, password);  
+            matched = loginModel.authenticateLogin(userid, password);  
         }
         
         if (matched != null) 

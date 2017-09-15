@@ -13,7 +13,6 @@ public class LoggedIn {
     
     boolean loggedin = false;
     int userid = 0;
-    String type = null;
     
     //initialisation
     public void LoggedIn(){
@@ -27,14 +26,6 @@ public class LoggedIn {
     public int getUserid(){
         return userid;
     }
-    /**
-    public void setType(String type){
-        this.type = type;
-    }
-    public String getType(){
-        return type;
-    }
-    */
    
     public void setLoggedin(){
         loggedin = true;

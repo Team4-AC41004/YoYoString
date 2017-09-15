@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Beans.LoggedIn"%>
 
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,7 @@
         <h1>YoYoString Stats</h1>
         
         <%
-        String loggedin = (String)session.getAttribute("loggedin");
+        LoggedIn loggedin = (LoggedIn) session.getAttribute("loggedin");
         //Options for logged-in user
         
         %>

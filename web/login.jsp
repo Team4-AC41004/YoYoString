@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Beans.LoggedIn"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,12 +20,9 @@
         <h1>YoYoString Stats</h1>   
         
           <%
-          String loggedin = (String)session.getAttribute("loggedin");
-          String failedlogin = (String)request.getAttribute("failedlogin");
-          if (failedlogin!=null){%>
-            <h3><%=failedlogin%></h3> 
-          <%
-          }
+          LoggedIn loggedin = (LoggedIn) session.getAttribute("loggedin");
+          //String failedlogin = (String)request.getAttribute("failedlogin");
+          //if (failedlogin!=null){ <h3><%//=failedlogin</h3>}
           %>  
         
            <nav class="navbar navbar-expand-lg navbar-light bg-light">
