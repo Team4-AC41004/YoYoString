@@ -5,8 +5,7 @@
  */
 package Models;
 
-//import 
-import Util.DBConnection;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,8 +34,8 @@ public class LoginModel {
         
         try 
         {
-            con = DBConnection.createConnection();
-            statement = con.createStatement();
+          //  con = DBConnection.createConnection();
+        //    statement = con.createStatement();
             resultSet = statement.executeQuery("SELECT ID,Password FROM user"); 
             
             while (resultSet.next())
@@ -53,7 +52,7 @@ public class LoginModel {
             
             resultSet.close();
             statement.close();
-            con.close();
+        //    con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
