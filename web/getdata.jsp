@@ -25,7 +25,7 @@
             String name = rs.getString("OutletName");
             String userid = rs.getString("UserID");
             String transtype = rs.getString("TransactionType");
-            int cashspent = rs.getInt("CashSpent");
+            float cashspent = rs.getFloat("CashSpent");
             
             empObj = new JSONObject();
             empObj.put("TransactionID", transactionid);
