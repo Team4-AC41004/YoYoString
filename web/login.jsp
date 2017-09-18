@@ -10,26 +10,36 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Page</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/index.css"/>
     </head>
     <body>
-        <h1>Welcome!</h1>    
+        <%@ include file="navbar.jsp" %>
+        <h1></h1>    
         <%
-        String failedlogin = (String)request.getAttribute("failedlogin");
-            if (failedlogin!=null){%>
-            <h3><%=failedlogin%></h3> 
-            <%
+            String failedlogin = (String) request.getAttribute("failedlogin");
+            if (failedlogin != null) {%>
+        <h3><%=failedlogin%>WHOOPS</h3> 
+        <%
             }
-            %>
-            
-        
-        <h2>Login Here:</h2>
-        <form action="Login" method="POST">
-            User ID: <input type="number" name="userid" min="1" max="100000" value="12345" required>
-            Password: <input type="password" name="password" value="" required><br>
-            <input type="submit" value="Submit">
-        </form>
-        
-        
-        
+        %>
+
+        <div class="jumbotron">
+            <h1 class="display-3">Login</h1><br/>
+
+            <form action="Login" method="POST">
+                <div class="form-group">
+                    <input type="number" class="form-control" placeholder="Username" name="userid" aria-label="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                </div>
+                    <hr class='my-4'/>
+                    <button type="submit" class="btn btn-primary">Submit </button>
+                </div>
+            </form>
+
+        </div>
+
     </body>
 </html>
