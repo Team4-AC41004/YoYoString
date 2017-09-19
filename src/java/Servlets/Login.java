@@ -48,7 +48,7 @@ public class Login extends HttpServlet {
             login.setLoggedin();
             login.setUserid(userid);
             session.setAttribute("loggedin", login);
-            RequestDispatcher rd = request.getRequestDispatcher("/main.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         } 
         else 
