@@ -23,7 +23,7 @@ public class LoginModel {
      * @param string password
      * @return String
      */
-    public String authenticateLogin(int userid, String password) 
+    public Object[] authenticateLogin(int userid, String password) 
     {
         Connection con;
         Statement statement = null;
@@ -32,12 +32,14 @@ public class LoginModel {
         int useridDB = 0;
         String passwordDB = "";
         boolean matched   = false;
+        Object[] userdata = new Object[2];
         
         try 
         {
             con = DBConnection.createConnection();
             statement = con.createStatement();
-            resultSet = statement.executeQuery("SELECT Userid, Password FROM users"); 
+            //resultSet = statement.executeQuery("SELECT Userid, Password FROM users"); 
+            resultSet = statement.executeQuery ("SELECT * FROM users WHERE Userid =" +userid);
             //resultSet = statement.executeQuery("SELECT * FROM users");
             
             while (resultSet.next())
@@ -48,6 +50,10 @@ public class LoginModel {
                 if ((userid==useridDB) && password.equals(passwordDB)) 
                 {
                     matched = true;// User credential match found in DB.
+                    
+                    userdata[0]= resultSet.getInt("OutletRef");                 
+                    userdata[1]= resultSet.getInt("IsAdmin");
+                    
                     break;
                 }
             }
@@ -59,8 +65,8 @@ public class LoginModel {
             e.printStackTrace();
         }
         
-        if(matched == true){
-            return "matched";
+        if(matched){
+            return userdata;
         }    
         else{
             return null; // Userid/Password not found/wrong.
