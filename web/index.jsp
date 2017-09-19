@@ -17,7 +17,7 @@
     </head>
     <style>
         body {
-            background:url('img/bg.png');
+
             position:fixed ;
             background-size: auto;
             background-repeat:no-repeat;

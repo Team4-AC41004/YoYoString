@@ -12,7 +12,7 @@
         List empdetails = new LinkedList();
         JSONObject responseObj = new JSONObject();
 
-        String query = "SELECT * FROM test LIMIT 0, 100;";
+        String query = "SELECT * FROM test LIMIT 400, 500;";
         PreparedStatement pstm = con.prepareStatement(query);
 
         rs = pstm.executeQuery();

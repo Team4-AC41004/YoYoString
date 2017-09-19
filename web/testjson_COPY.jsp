@@ -106,6 +106,7 @@
     <body>
         <div id="table_div"></div>
         <div id="chart_div"></div>
+        
         <br>
             <button type="button" class="btn btn-primary" onclick="downloadPDF()">Download Graph in PDF</button>
             <br><br>
