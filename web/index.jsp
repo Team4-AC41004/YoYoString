@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Beans.LoggedIn"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,7 +19,7 @@
     </head>
     <style>
         body {
-            background:url('img/bg.png');
+
             position:fixed ;
             background-size: auto;
             background-repeat:no-repeat;
@@ -33,9 +35,9 @@
         
         <div class="container-fluid">
 
-            <%  //Welcome loggedin user
+            <%  LoggedIn Loggedin = (LoggedIn) session.getAttribute("loggedin");
                 if (loggedin != null) {%> 
-            <h3>Welcome <%=loggedin%> !</h3>  
+            <h3>Welcome <%=Loggedin.getUserid()%> !</h3>  
             <%} else { %><br/>
             <div class="alert alert-info" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" style='cursor: pointer'>

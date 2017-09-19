@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="Beans.LoggedIn"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,7 +26,7 @@
                         <a class="nav-link" href="index.jsp">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <%  //Welcome loggedin user
-                        String loggedin = (String) session.getAttribute("loggedin");
+                        LoggedIn loggedin = (LoggedIn) session.getAttribute("loggedin");
                         if (loggedin != null) {%> 
                     <li class="nav-item">
                         <a class="nav-link" href="Logout">Logout</a><%} else {%>
