@@ -18,19 +18,7 @@
         <link rel="stylesheet" href="css/index.css"/>
         <title>YoYoString - Home</title>
     </head>
-    <style>
-        body {
-
-            position:fixed ;
-            background-size: auto;
-            background-repeat:no-repeat;
-            top:0;
-            width:100%;
-            z-index:0;
-            height:100%;
-            background-size:100%;
-        }
-    </style>
+ 
     <body>
         <%@include file="navbar.jsp" %>
         
@@ -40,7 +28,7 @@
                 if (loggedin != null) {%> 
             <h3>Welcome <%=Loggedin.getUserid()%> !</h3>  
             <%} else { %><br/>
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-info float-center" style="width: 100%;"role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" style='cursor: pointer'>
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -49,9 +37,9 @@
 
 
         </div>
+            
+       
 
-    </div>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.2/vivus.min.js" integrity="sha256-QkfKcx3kugootBtJEPpTKDsWEneddME3kXPoT5o3Yic=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
