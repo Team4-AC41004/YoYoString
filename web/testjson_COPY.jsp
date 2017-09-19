@@ -64,7 +64,8 @@
             }
             
             function downloadPDF() {
-            var imgData = "<%= session.getAttribute( "chartImgID" ) %>";                 
+            //var imgData = "<%= session.getAttribute( "chartImgID" ) %>"; 
+            var imgData = document.getElementById("chartImgID").value;
             var doc = new jsPDF('landscape');
             var width = doc.internal.pageSize.width;    
             var height = doc.internal.pageSize.height; 
@@ -107,6 +108,10 @@
         <div id="table_div"></div>
         <div id="chart_div"></div>
         <br>
+                <form action="GraphPageTest" method="POST">
+                <input type="hidden" name="chartImgID"  id="chartImgID">
+                </form>
+        
             <button type="button" class="btn btn-primary" onclick="downloadPDF()">Download Graph in PDF</button>
             <br><br>
     </body>
