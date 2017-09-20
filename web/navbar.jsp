@@ -7,6 +7,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="Beans.LoggedIn"%>
 
+<%-- 
+<%@page import="Beans.User"%>
+--%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,6 +31,9 @@
                             </li>
                             <%  //Welcome loggedin user
                                 LoggedIn loggedin = (LoggedIn) session.getAttribute("loggedin");
+                                
+                                //User user = new User();
+    
                                 if (loggedin != null) {%> 
                             <li class="nav-item">
                                 <a class="nav-link" href="#"> <i class="icon ion-person"></i> <%=loggedin.getUserid()%> </a>
@@ -37,6 +44,20 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="testjson.jsp"> Stats</a>
                             </li>
+                            
+                            <%--
+                                <%
+                                int isadmin = user.getIsadmin();
+                                if (isadmin == 1)
+                                {%>
+                            --%>
+                            <li class="nav-item">
+                            <a class="nav-link" href="UserController?action=listUsers"> Manage Users</a>
+                            </li>
+                            <%--
+                            <%}%>
+                            --%>
+                            
                             <%} else {%>
                             <li class="nav-item">
                                 <a class="nav-link" href="Login">Login</a>
