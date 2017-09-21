@@ -68,11 +68,12 @@ public class testServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("doGet in testServlet.java.");
         //processRequest(request, response);
         
         // ??? comment out or not??!?!?!??!?!?!?!
-        //RequestDispatcher rd = request.getRequestDispatcher("/testJSP.jsp");
-        //rd.forward(request, response);
+        RequestDispatcher rd = request.getRequestDispatcher("/testJSP.jsp");
+        rd.forward(request, response);
     }
 
     /**
@@ -87,7 +88,7 @@ public class testServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        
+        System.out.println("doPost in testServlet.java.");
         // None of this is done.
         HttpSession session = request.getSession();
         LoggedIn loggedin = (LoggedIn) session.getAttribute("loggedin");
@@ -99,6 +100,7 @@ public class testServlet extends HttpServlet {
             //request.setAttribute("type", "pos");
             try 
             { 
+                System.out.println("try in doPost in testServlet.java");
                 //request. ?
                 //session.setAttribute("testAttribute", testModelObj.getBeanList() );
                 
@@ -106,10 +108,12 @@ public class testServlet extends HttpServlet {
                 request.setAttribute("JSONListAttribute", testModelObj.getJSONObjectList() ); 
             } catch (SQLException ex) {
                 Logger.getLogger(testServlet.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("catch in doPost in testServlet.java");
             }
-            
+            System.out.println("after try in doPost in testServlet.java");
             RequestDispatcher rd = request.getRequestDispatcher("/testJSP.jsp");
             rd.forward(request, response);
+            
         //}
         
     }
