@@ -32,6 +32,7 @@
                 var data = new google.visualization.DataTable();
                 <!--data.addColumn('string', 'Name');-->
                 <!--data.addColumn('number', 'Transaction ID #');-->
+                <!-- Google charts uses a datetime type. Because JSON does not hold a datetime format we pass through our date info as ints -->
                 data.addColumn('datetime', 'DateAndTime');
                 data.addColumn('number', 'Amount Spent £');
 
@@ -46,6 +47,10 @@
                     console.log(queryObject.empdetails[i].CashSpent);
                     var transid = queryObject.empdetails[i].TransactionID;
                     console.log(queryObject.empdetails[i].TransactionID);
+                    //We use Google charts Date type to convert our int array'd date into a readable format for the Google Charts API
+                    //We do this by stepping through each member of the array and seperating them by commas
+                    //For a better understanding see Google Charts article on Date and Time 
+                    //https://developers.google.com/chart/interactive/docs/datesandtimes
                     data.addRows([
                         [new Date(date[0], date[1], date[2], date[3], date[4], date[5], date[6]), cashspent]
                     ]);

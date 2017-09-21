@@ -22,12 +22,17 @@
         while (rs.next()) {
             int transactionid = rs.getInt("TransactionID");
             String date = rs.getString("DateAndTime");
+            //Date is stored in raw format
+            //date = 2014-12-10 12:30.12.0
             String[] parseddate = date.split(delims);
-            //String finaldate = Arrays.toString(parseddate).replace("[","").replace("]","");
+            //Date is then parsed, storing each number as a string in the array
+            //parseddate = [2014, 12, 10, 12, 30, 12, 0 ]    Each member is a string
             int[] finaldate = new int[parseddate.length];
             for (int i=0; i < parseddate.length; i++) {
                 finaldate[i] = Integer.parseInt(parseddate[i]);
             }
+            //parseddate is then converted from a string into an int array so that it can be used by google charts
+            //finaldate = [2014, 12, 10, 12, 30, 12, 0 ]    Each member is an int
             int id = rs.getInt("OutletRef");
             String name = rs.getString("OutletName");
             String userid = rs.getString("UserID");
