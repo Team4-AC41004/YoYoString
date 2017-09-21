@@ -2,6 +2,8 @@
     Document   : testJSP
     Created on : 18-Sep-2017, 15:00:03
     Author     : Philipp
+        
+    Don't change this. It's a template, so copy paste and adjust for your needs.
 --%>
 
 <%@page import="Beans.testBean"%>
@@ -17,53 +19,63 @@
     </head>
     <body>
         <h1>This is testJSP.jsp h1</h1>
+        This shows every single Column in the Database.
+        <br>Check testJSP.jsp, testModel.java and testServlet.java and adjust for your needs.
+        <br>Don't change the files themselves though, they shall serve as templates, because they show how to do this shit and implement MVC, too.
+        <br><br>
         <div id="table_div"></div>
         
+        
+        <!-- Load the google chart loader. -->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type ="text/javascript">
 
-            google.charts.load('current', {'packages': ['table', 'corechart']});
+            google.charts.load('current', {'packages': ['table', 'corechart']}); // table, corechart and can add more.
             google.charts.setOnLoadCallback(drawTable);
 
             function drawTable() 
             {  
-                console.log("1debug");
                 var data = new google.visualization.DataTable();
                 // Order of Columns must be remembered below when atting rows.
-                //data.addColumn('string', 'Name');
-                data.addColumn('date', 'Date');
-                data.addColumn('timeofday', 'Time');
-                data.addColumn('number', 'Outlet Ref');
-                data.addColumn('string', 'Outlet Name');
-                data.addColumn('number', 'Cash spent');
+                
+                // Again, you might not need every single column+row.
+                data.addColumn('datetime', 'Date And Time'); //data.addColumn('datatype', 'NameofColumnlalala');
+                data.addColumn('number'  , 'Outlet Ref');
+                data.addColumn('string'  , 'Outlet Name');
+                data.addColumn('string'  , 'User ID');
+                data.addColumn('string'  , 'Transaction Type');
+                data.addColumn('number'  , 'Cash spent');
+                data.addColumn('number'  , 'Discount');
+                data.addColumn('number'  , 'Total');
+                data.addColumn('number'  , 'Transaction ID');
+                
                 
                 // Get the Attribute which holds all data retrieved by Model.
-                var test = <%=request.getAttribute("JSONListAttribute")%>;
-                console.log("test: " + test + "length: " + test.length);
+                var jsonListOfDBdata = <%=request.getAttribute("JSONListAttribute")%>;
+                //console.log("jsonListOfDBdata: " + jsonListOfDBdata + "length: " + jsonListOfDBdata.length);
                 
                 
-                for (var a = 0; a < test.length; a++)
+                for (var a = 0; a < jsonListOfDBdata.length; a++)
                 {
-                    //console.log("for loop[a]: " + a);
-                    //console.log("test[a].DateAndTime: " + test[a].DateAndTime);
-                    //console.log("test[a].CashSpent " + test[a].CashSpent);
-                    //var dateTime = test.;
-                    //console.log("test[a].valueOf: " + test[a].DateAndTime.valueOf() );
-                    //console.log("test[a].toString: " + test[a].DateAndTime.toString() );
+                    var dateTime = jsonListOfDBdata[a].DateAndTime;
                     // Order is important. Must match Columns.
                     data.addRows
                     ([[
-                        test[a].Date,
-                        test[a].Time,
-                        test[a].OutletRef,
-                        test[a].OutletName,
-                        test[a].CashSpent
+                        new Date(dateTime[0], dateTime[1], dateTime[2], dateTime[3], dateTime[4], dateTime[5], dateTime[6]),
+                        jsonListOfDBdata[a].OutletRef,
+                        jsonListOfDBdata[a].OutletName,
+                        jsonListOfDBdata[a].UserID,
+                        jsonListOfDBdata[a].TransactionType, 
+                        jsonListOfDBdata[a].CashSpent,
+                        jsonListOfDBdata[a].Discount,
+                        jsonListOfDBdata[a].Total,
+                        jsonListOfDBdata[a].TransactionID
                     ]]);
                 }
                      
                         
                      /* 
-                for (var i = 0; i < test.; i++)
+                for (var i = 0; i < jsonListOfDBdata.; i++)
                 {
                     console.log(queryObject.empdetails[i]);
     

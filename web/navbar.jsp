@@ -37,6 +37,13 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="Stats"> Stats</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="testServlet">EVERYTHING_TABLE</a>
+                                <!-- 
+                                <form method="Post" action="testServlet" style="margin-bottom: 0em;">
+                                    <input type="submit" name="type" value="To Philipp's Test Page" id="submit">
+                                </form> --> <!-- This will trigger the doPost Method in the Servlet that has name testServlet. -->
+                            </li>
                             <%} else {%>
                             <li class="nav-item">
                                 <a class="nav-link" href="Login">Login</a>

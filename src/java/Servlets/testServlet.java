@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Don't change this. It's a template, so copy paste and adjust for your needs.
  */
 package Servlets;
 
@@ -67,11 +65,19 @@ public class testServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException 
+    {
         System.out.println("doGet in testServlet.java.");
-        //processRequest(request, response);
         
-        // ??? comment out or not??!?!?!??!?!?!?!
+        testModel testModelObj = new testModel();
+        try 
+        {
+            // Retrieve the attribute that holds all data which was retrieved by the Model from the Database.
+            request.setAttribute("JSONListAttribute", testModelObj.getJSONObjectList() ); 
+        } 
+        catch (SQLException ex) { Logger.getLogger(testServlet.class.getName()).log(Level.SEVERE, null, ex); }
+        
+        System.out.println("after try in doPost in testServlet.java");
         RequestDispatcher rd = request.getRequestDispatcher("/testJSP.jsp");
         rd.forward(request, response);
     }

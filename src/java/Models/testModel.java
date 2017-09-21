@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Don't change this. It's a template, so copy paste and adjust for your needs.
  */
 package Models;
 
@@ -35,6 +33,7 @@ public class testModel {
             List listOfJSONObjects = new LinkedList(); // Do you need to specify type of objects in the LinkedList? Like ArrayList<myBeanNameBlabla> ?
             JSONObject jsonObj = new JSONObject();
             Statement statement = conn.createStatement();
+            String delimiters = "[-: .]";
             
             // Prepared Statement if it's "hardcoded" and can't be changed or influenced by user.
          /* String query = "SELECT * FROM databaseTableName LIMIT 0, 100;";
@@ -51,23 +50,33 @@ public class testModel {
                 JSONObject jsonData = new JSONObject();
                 
                 // Get the data from the ResultSet and store in jsonData.
-                //jsonData.put("DateAndTime", resultSet.getDate("DateAndTime"));
-                jsonData.put("Date", resultSet.getDate("DateAndTime"));
-                jsonData.put("Time", resultSet.getTime("DateAndTime"));
-                jsonData.put("OutletRef"  , resultSet.getInt("OutletRef"));
-                jsonData.put("OutletName" , resultSet.getString("OutletName"));
-                jsonData.put("CashSpent"  , resultSet.getFloat("CashSpent"));
+                
+                // Date and Time are special and must be processed a bit.
+                String dateAndTime  = resultSet.getString("DateAndTime"); //Date is stored in raw format: date = 2014-12-13 12:30.12.0
+                String[] parsedDateTime = dateAndTime.split(delimiters); //Date is then parsed, storing each number as a string in the array//parseddate = [2014, 12, 10, 12, 30, 12, 0 ]    Each member is a string
+                int[] finalDateTime = new int[parsedDateTime.length];
+                for (int i = 0; i < parsedDateTime.length; i++)
+                { finalDateTime[i] = Integer.parseInt(parsedDateTime[i]); }//parseddate is then converted from a string into an int array so that it can be used by google charts//finaldate = [2014, 12, 10, 12, 30, 12, 0 ]    Each member is an int
+                
+                // Here I get every single column. You might not actually need all of them for the chart you are making.
+                jsonData.put("DateAndTime"  , finalDateTime);
+                jsonData.put("OutletRef"    , resultSet.getInt("OutletRef"));
+                jsonData.put("OutletName"   , resultSet.getString("OutletName"));
+                jsonData.put("UserID"       , resultSet.getString("UserID"));
+                jsonData.put("TransactionType", resultSet.getString("TransactionType"));
+                jsonData.put("CashSpent"    , resultSet.getFloat("CashSpent"));
+                jsonData.put("Discount"     , resultSet.getFloat("Discount")); 
+                jsonData.put("Total"        , resultSet.getFloat("Total"));
+                jsonData.put("TransactionID", resultSet.getInt("TransactionID"));
                 
                 // Add the jsonData object to the list.
                 listOfJSONObjects.add(jsonData);
-                
-                
                 
                 // Chris sticks the list into another JSONObject and then sends this via out.print
                 // Check if that's needed or if that's just due to him doing it in .jsp
             }
             
-            // Return the list to be used.
+            // Return the list that contains all the retrieved data. (This will be called by the Servlet).
             return listOfJSONObjects;
         }
         catch (SQLException e) { e.printStackTrace(); }
@@ -76,12 +85,12 @@ public class testModel {
             if (conn != null && !conn.isClosed()) {
                 conn.close();
             }
-            
         }
         return null; // DB Conn failed or no data found.
     }
     
     
+    // This is the version where you use a self-made Bean, but for now we'll use JSONObjects due to google graphs.
     public ArrayList<testBean> getBeanList() throws SQLException 
     {
         Connection conn      = null;
