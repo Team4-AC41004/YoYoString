@@ -51,7 +51,9 @@ public class testModel {
                 JSONObject jsonData = new JSONObject();
                 
                 // Get the data from the ResultSet and store in jsonData.
-                jsonData.put("DateAndTime", resultSet.getDate("DateAndTime"));
+                //jsonData.put("DateAndTime", resultSet.getDate("DateAndTime"));
+                jsonData.put("Date", resultSet.getDate("DateAndTime"));
+                jsonData.put("Time", resultSet.getTime("DateAndTime"));
                 jsonData.put("OutletRef"  , resultSet.getInt("OutletRef"));
                 jsonData.put("OutletName" , resultSet.getString("OutletName"));
                 jsonData.put("CashSpent"  , resultSet.getFloat("CashSpent"));
@@ -59,12 +61,14 @@ public class testModel {
                 // Add the jsonData object to the list.
                 listOfJSONObjects.add(jsonData);
                 
-                // Return the list to be used.
-                return listOfJSONObjects;
+                
                 
                 // Chris sticks the list into another JSONObject and then sends this via out.print
                 // Check if that's needed or if that's just due to him doing it in .jsp
             }
+            
+            // Return the list to be used.
+            return listOfJSONObjects;
         }
         catch (SQLException e) { e.printStackTrace(); }
         finally
