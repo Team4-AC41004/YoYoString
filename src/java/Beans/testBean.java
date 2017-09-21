@@ -1,3 +1,7 @@
+/*
+ * Don't change this. It's a template, so copy paste and adjust for your needs.
+*/
+
 package Beans;
 import java.util.Date; // Deprecated ... ?
 import java.text.DateFormat;
