@@ -8,6 +8,7 @@ package Servlets;
 import Models.LoginModel;
 import Beans.LoggedIn;
 
+import java.util.Arrays;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,19 +37,39 @@ public class Login extends HttpServlet {
         LoginModel loginModel = new LoginModel(); // This class contains main logic of the feature.
         
         boolean sanetizeCheck = checkInput(password);
-        String matched = null;
+        boolean matched = false;
+        Object[] userdata = new Object[2];
         
         if (sanetizeCheck){
-            matched = loginModel.authenticateLogin(userid, password);  
+            try{
+                //userdata = (loginModel.authenticateLogin(userid, password)).clone();  
+                userdata = Arrays.copyOf(loginModel.authenticateLogin(userid, password), 2);
+                
+                matched=true;
+            }catch(NullPointerException e) {
+                matched=false;
+            }
+            
+            //userdata = (loginModel.authenticateLogin(userid, password)).clone();    
         }
         
-        if (matched != null) 
+        if (matched != false) 
         {
             LoggedIn login = new LoggedIn();
             login.setLoggedin();
             login.setUserid(userid);
+            
+            //not admin
+            if ((int) userdata[1] == 0){
+                login.setOutletRef((int)userdata[0]);
+            }
+            //admin
+            else{
+                login.setIsAdmin(1);
+            }
+            
             session.setAttribute("loggedin", login);
-            RequestDispatcher rd = request.getRequestDispatcher("/main.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
             rd.forward(request, response);
         } 
         else 

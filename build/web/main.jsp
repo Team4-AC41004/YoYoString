@@ -50,12 +50,34 @@
                 <li class="nav-item">
                   <a class="nav-link disabled" href="#">Very Wow</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="#">TestPS</a>
+                </li>
+                <li class="nav-item">
+                    <form method="Post" action="testServlet" style=" margin-bottom: 0em;">
+                        <input type="submit" name="type" value="To Philipp's Test Page" id="submit">
+                        <!-- This will trigger the doPost Method in the Servlet that has name testServlet. -->
+                    </form>
+                </li>
+                
               </ul>
               
               <form class="form-inline my-2 my-lg-0" action="Logout" method="GET">
                 <button class="btn btn-sm align-middle btn-outline-secondary" type="submit">Logout</button>
               </form>
-              
+                
+                <% ////////////////////////////////////////////////////
+                if (loggedin.getIsAdmin()==1){%>
+                    <h3> Hello <%=loggedin.getUserid()%> admin!</h3>
+                <%
+                }
+                else{%>
+                    <h3> Hello <%=loggedin.getUserid()%> from Outlet <%=loggedin.getOutletRef()%></h3>
+                <%
+                }
+                ////////////////////////////////////////////////////%>
+                
+                
               <%
               }else{
               %>      
