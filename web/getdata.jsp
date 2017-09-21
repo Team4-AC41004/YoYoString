@@ -12,24 +12,38 @@
         List empdetails = new LinkedList();
         JSONObject responseObj = new JSONObject();
 
-        String query = "SELECT * FROM test LIMIT 0, 100;";
+        String query = "SELECT * FROM test LIMIT 0, 500;";
         PreparedStatement pstm = con.prepareStatement(query);
 
         rs = pstm.executeQuery();
         JSONObject empObj = null;
+        String delims = "[-: .]";
 
         while (rs.next()) {
             int transactionid = rs.getInt("TransactionID");
             String date = rs.getString("DateAndTime");
+            //Date is stored in raw format
+            //date = 2014-12-10 12:30.12.0
+            String[] parseddate = date.split(delims);
+            //Date is then parsed, storing each number as a string in the array
+            //parseddate = [2014, 12, 10, 12, 30, 12, 0 ]    Each member is a string
+            int[] finaldate = new int[parseddate.length];
+            for (int i=0; i < parseddate.length; i++) {
+                finaldate[i] = Integer.parseInt(parseddate[i]);
+            }
+            //parseddate is then converted from a string into an int array so that it can be used by google charts
+            //finaldate = [2014, 12, 10, 12, 30, 12, 0 ]    Each member is an int
             int id = rs.getInt("OutletRef");
             String name = rs.getString("OutletName");
             String userid = rs.getString("UserID");
             String transtype = rs.getString("TransactionType");
-            int cashspent = rs.getInt("CashSpent");
+            float cashspent = rs.getFloat("CashSpent");
             
             empObj = new JSONObject();
             empObj.put("TransactionID", transactionid);
 
+            empObj.put("DateAndTime", finaldate);
+            
             empObj.put("UserID", userid);
             
             empObj.put("CashSpent", cashspent);
@@ -38,7 +52,6 @@
         }
         responseObj.put("empdetails", empdetails);
         out.print(responseObj.toString());
-        
     } catch (Exception e) {
         e.printStackTrace();
     } finally {

@@ -65,7 +65,19 @@
               <form class="form-inline my-2 my-lg-0" action="Logout" method="GET">
                 <button class="btn btn-sm align-middle btn-outline-secondary" type="submit">Logout</button>
               </form>
-              
+                
+                <% ////////////////////////////////////////////////////
+                if (loggedin.getIsAdmin()==1){%>
+                    <h3> Hello <%=loggedin.getUserid()%> admin!</h3>
+                <%
+                }
+                else{%>
+                    <h3> Hello <%=loggedin.getUserid()%> from Outlet <%=loggedin.getOutletRef()%></h3>
+                <%
+                }
+                ////////////////////////////////////////////////////%>
+                
+                
               <%
               }else{
               %>      

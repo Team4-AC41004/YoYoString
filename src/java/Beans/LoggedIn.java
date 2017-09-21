@@ -13,6 +13,8 @@ public class LoggedIn {
     
     boolean loggedin = false;
     int userid = 0;
+    int outletref = 0;
+    int isadmin = 0;
     
     //initialisation
     public void LoggedIn(){
@@ -32,6 +34,9 @@ public class LoggedIn {
     }
     public void setLoggedout(){
         loggedin = false;
+        isadmin = 0;
+        outletref = 0;
+        userid=0;
     }
     
     public void setLoginState(boolean loggedin){
@@ -41,4 +46,19 @@ public class LoggedIn {
         return loggedin;
     }
     
+    public void setOutletRef(int outletref){
+        this.outletref = outletref;
+    }
+    
+    public int getOutletRef(){
+        return outletref;
+    }
+    
+    public void setIsAdmin(int isadmin){
+        this.isadmin = isadmin;
+    }
+    
+    public int getIsAdmin(){
+        return isadmin;
+    }  
 }
