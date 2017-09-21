@@ -27,13 +27,13 @@
                     <div class="form-group row">
                         <label for="useridlog" class="col-sm-2 col-form-label">User ID:</label>
                         <div class="col-sm-10">
-                            <input type="username" id="useridlog" name="userid" placeholder="12345" required class="form-control" id="userid">
+                            <input type="number" id="useridlog" name="userid" placeholder="12345" required class="form-control" id="userid" min="1" max="999999999">
                         </div>
                     </div>   
                     <div class="form-group row">
                         <label for="password" class="col-sm-2 col-form-label">Password:</label>
                         <div class="col-sm-10">
-                            <input type="password" id="password" name="password" required class="form-control" id="password">
+                            <input type="password" id="password" name="password" required class="form-control" id="password" maxlength="45">
                         </div>
                     </div>
                    
