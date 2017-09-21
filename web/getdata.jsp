@@ -17,10 +17,17 @@
 
         rs = pstm.executeQuery();
         JSONObject empObj = null;
+        String delims = "[-: .]";
 
         while (rs.next()) {
             int transactionid = rs.getInt("TransactionID");
             String date = rs.getString("DateAndTime");
+            String[] parseddate = date.split(delims);
+            //String finaldate = Arrays.toString(parseddate).replace("[","").replace("]","");
+            int[] finaldate = new int[parseddate.length];
+            for (int i=0; i < parseddate.length; i++) {
+                finaldate[i] = Integer.parseInt(parseddate[i]);
+            }
             int id = rs.getInt("OutletRef");
             String name = rs.getString("OutletName");
             String userid = rs.getString("UserID");
@@ -30,6 +37,8 @@
             empObj = new JSONObject();
             empObj.put("TransactionID", transactionid);
 
+            empObj.put("DateAndTime", finaldate);
+            
             empObj.put("UserID", userid);
             
             empObj.put("CashSpent", cashspent);
@@ -38,7 +47,6 @@
         }
         responseObj.put("empdetails", empdetails);
         out.print(responseObj.toString());
-        
     } catch (Exception e) {
         e.printStackTrace();
     } finally {

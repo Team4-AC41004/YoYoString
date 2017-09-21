@@ -30,24 +30,26 @@
           
             function drawDashboard() {
                 var data = new google.visualization.DataTable();
-                <!--     data.addColumn('string', 'Name');-->
-                data.addColumn('number', 'Transaction ID #');
-                data.addColumn('number', 'Amount (£)');
+                <!--data.addColumn('string', 'Name');-->
+                <!--data.addColumn('number', 'Transaction ID #');-->
+                data.addColumn('datetime', 'DateAndTime');
+                data.addColumn('number', 'Amount Spent £');
 
                 for(var i=0; i<queryObjectLen; i++)
                 {
                     console.log(queryObject.empdetails[i]);
                     var name = queryObject.empdetails[i].UserID;
                     console.log(queryObject.empdetails[i].UserID);
-                    var empid =  queryObject.empdetails[i].CashSpent;
+                    var date =  queryObject.empdetails[i].DateAndTime;
+                    console.log(queryObject.empdetails[i].DateAndTime);
+                    var cashspent = queryObject.empdetails[i].CashSpent;
                     console.log(queryObject.empdetails[i].CashSpent);
                     var transid = queryObject.empdetails[i].TransactionID;
                     console.log(queryObject.empdetails[i].TransactionID);
                     data.addRows([
-                        [transid,empid]
+                        [new Date(date[0], date[1], date[2], date[3], date[4], date[5], date[6]), cashspent]
                     ]);
                 }
-
 
                 var table = new google.visualization.Table(document.getElementById('table_div'));
                 table.draw(data, { width: '100%', height: '100%'});

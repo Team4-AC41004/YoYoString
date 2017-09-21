@@ -41,7 +41,7 @@
                     <br/><br/>
                 </form>
                 <hr class="my-2"/>
-                <small class="text-muted"> Having trouble logging in? Contact an Administrator to reset your password.</small>
+                <small class="text-muted float-right"> Having trouble logging in? Contact an Administrator to reset your password.</small>
             </div>
 
 
