@@ -44,6 +44,10 @@
                                     <input type="submit" name="type" value="To Philipp's Test Page" id="submit">
                                 </form> --> <!-- This will trigger the doPost Method in the Servlet that has name testServlet. -->
                             </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="AdminOptions"> Admin Options</a>
+                            </li>
+                            
                             <%} else {%>
                             <li class="nav-item">
                                 <a class="nav-link" href="Login">Login</a>
