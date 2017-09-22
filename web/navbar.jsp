@@ -35,7 +35,7 @@
                                 <a class="nav-link" href="Logout">Logout</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="Stats"> Stats</a>
+                                <a class="nav-link" href="AllData"> Stats</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="testServlet">EVERYTHING_TABLE</a>
@@ -49,10 +49,7 @@
                                 <a class="nav-link" href="Login">Login</a>
                             </li><%}%>
                         </ul>
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-info my-2 my-sm-0" type="submit">Search</button>
-                        </form>
+                       
                     </div>
                     </nav>
                    

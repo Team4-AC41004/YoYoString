@@ -18,7 +18,7 @@
         <title>Le Title</title>
     </head>
     <body>
-        <h1>This is testJSP.jsp h1</h1>
+        <h1>This is testJSP.jsp </h1>
         This shows every single Column in the Database.
         <br>Check testJSP.jsp, testModel.java and testServlet.java and adjust for your needs.
         <br>Don't change the files themselves though, they shall serve as templates, because they show how to do this shit and implement MVC, too.
@@ -94,7 +94,7 @@
                 
 
                 var table = new google.visualization.Table(document.getElementById('table_div'));
-                table.draw(data, { width: '60%', height: '100%'});
+                table.draw(data, { width: '100%', height: '100%', page: 'enabled'});
                 
                 
                 
