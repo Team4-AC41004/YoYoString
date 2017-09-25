@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="form-group " id="enabledate">
                                     <label for="startdatepicker"> Start Date</label>
-                                    <input type="date" class="form-control" id="startdatepicker" placeholder="2000/01/01">
+                                    <input type="text" class="form-control" id="startdatepicker" placeholder="2000/01/01">
 
                                     <label for="enddatepicker"> End Date </label> 
                                     <input type="text" class="form-control" id="enddatepicker" placeholder="3000/12/31"> 
@@ -137,6 +137,7 @@
                 
                 <div id="table_div"></div>
                 <div id="chart_div"></div>
+                <button class="btn btn-info" onclick="loadEditor()">Edit Chart</button>
             </div>
         </div>
          <script>
@@ -166,11 +167,14 @@
       google.charts.load('current', {'packages': ['table', 'corechart', 'charteditor']}); // table, corechart and can add more.
       google.charts.setOnLoadCallback(drawTable);
       
+      var chartEditor = null;
+      var wrapper = null;
+      var result = null;
 
 
       function drawTable()
       {
-          google.charts.setOnLoadCallback(loadEditor);
+          google.charts.setOnLoadCallback(createEditor);
           var data = new google.visualization.DataTable();
           // Order of Columns must be remembered below when atting rows.
 
@@ -208,32 +212,35 @@
                               jsonListOfDBdata[a].TransactionID
                           ]]);
             }
-            var result = google.visualization.data.group(data, [2], [{'column': 7, 'aggregation': google.visualization.data.sum, 'type': 'number'}]);
+            result = google.visualization.data.group(data, [2], [{'column': 7, 'aggregation': google.visualization.data.sum, 'type': 'number'}]);
             var table = new google.visualization.Table(document.getElementById('table_div'));
             table.draw(result, {width: '40%', height: '100%', page: 'enabled', allowHTML: 'true', columns: ''});
-            
+        }
          
-         var chartEditor = null;
 
-        function loadEditor() {
+        function createEditor() {
           // Create the chart to edit.
-          var wrapper = new google.visualization.ChartWrapper({
-             'chartType':'LineChart',
-             'dataTable':result,
+            wrapper = new google.visualization.ChartWrapper({
+             'chartType':'PieChart',
+             'dataTable': result,
              
              'options': {'title':'Population Density (people/km^2)', 'legend':'none'}
           });
 
           chartEditor = new google.visualization.ChartEditor();
           google.visualization.events.addListener(chartEditor, 'ok', redrawChart);
-          chartEditor.openDialog(wrapper, {});
         }
+    
 
         // On "OK" save the chart to a <div> on the page.
         function redrawChart(){
           chartEditor.getChartWrapper().draw(document.getElementById('chart_div'));
         }
-    }
+        
+        
+        function loadEditor(){
+            chartEditor.openDialog(wrapper, {});
+        }
        
         </script>
 
