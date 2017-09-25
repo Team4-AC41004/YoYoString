@@ -71,9 +71,6 @@ public class SearchData extends HttpServlet{
         else{
             location="!";
         }
-        System.out.println("startdate in servlet: " +startdate);
-        System.out.println("location in servlet: " +location);
-        System.out.println("userid in servlet: " +userid);
         
         AllDataModel data = new AllDataModel(); // This class contains methods for user queries
         boolean matched = false;
