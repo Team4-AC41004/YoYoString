@@ -31,14 +31,9 @@ public class testModel {
             
             ResultSet resultSet = null;
             List listOfJSONObjects = new LinkedList(); // Do you need to specify type of objects in the LinkedList? Like ArrayList<myBeanNameBlabla> ?
-            JSONObject jsonObj = new JSONObject();
+            
             Statement statement = conn.createStatement();
             String delimiters = "[-: .]";
-            
-            // Prepared Statement if it's "hardcoded" and can't be changed or influenced by user.
-         /* String query = "SELECT * FROM databaseTableName LIMIT 0, 100;";
-            PreparedStatement pstm = conn.prepareStatement(query);
-            resultSet = pstm.executeQuery(); */
             
             // Select which Data to pull from DB and store in resultset.
             resultSet = statement.executeQuery("SELECT * FROM test LIMIT 0,100");
@@ -71,9 +66,6 @@ public class testModel {
                 
                 // Add the jsonData object to the list.
                 listOfJSONObjects.add(jsonData);
-                
-                // Chris sticks the list into another JSONObject and then sends this via out.print
-                // Check if that's needed or if that's just due to him doing it in .jsp
             }
             
             // Return the list that contains all the retrieved data. (This will be called by the Servlet).
@@ -122,9 +114,9 @@ public class testModel {
             
             conn.close();
             return listOfTestBeans;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally { //finally runs before a return in the try block
+        } catch (SQLException e) { e.printStackTrace(); } 
+        finally { 
+        // finally runs before a return in the try block.
             if (conn != null && !conn.isClosed()) {
                 conn.close();
             }
@@ -132,20 +124,4 @@ public class testModel {
         
         return null; // DB Conn failed or no data found.
     }
-    
-    
 }
-
-
-                // === Using a selfmade Bean ===
-                // Make a new Bean Object which will hold this row of data.
-                //testBean testBeanObj = new testBean();
-                
-                // Store the data of the ResultSet in the Bean.
-                //testBeanObj.setDateAndTime( resultSet.getDate("DateAndTime") );
-                //testBeanObj.setOutletRef(
-                //testBeanObj.setOutletName(
-                //testBeanObj.setCashSpent(
-                
-                // Add Bean to the list.
-                //listOfBeans.add(testBeanObj);
