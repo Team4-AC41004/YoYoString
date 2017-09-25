@@ -38,7 +38,21 @@
                 $("#enddatepicker").datepicker();
             });
         </script>
+        
     </head>
+    <style>
+        .modal-dialog{
+            
+        all:initial;    
+        z-index: 999;
+        }
+        #google-visualization-charteditor-name-input
+        {
+            background-color: none;
+        }
+
+        
+    </style>
     <body>
         <%@ include file="navbar.jsp"%>
         <div class="content">
