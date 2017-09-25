@@ -75,7 +75,7 @@
                 </div>
                 <hr class="my-2"/>
                 <div class="row">
-                    <form action="Search" method="POST">
+                    <form action="SearchData" method="POST">
                         <h1 class="display-4"> Search Options</h1> <br/>
                         <div class="row">
                             <div class="col-3">
@@ -87,10 +87,10 @@
                                 </div>
                                 <div class="form-group " id="enabledate">
                                     <label for="startdatepicker"> Start Date</label>
-                                    <input type="text" class="form-control" id="startdatepicker" placeholder="2000/01/01">
+                                    <input type="text" class="form-control" name = "startdatepicker" id="startdatepicker" placeholder="2000/01/01">
 
                                     <label for="enddatepicker"> End Date </label> 
-                                    <input type="text" class="form-control" id="enddatepicker" placeholder="3000/12/31"> 
+                                    <input type="text" class="form-control" name = "enddatepicker" id="enddatepicker" placeholder="3000/12/31"> 
                                 </div>
                             </div>
                             <div class="col-3">
@@ -103,7 +103,7 @@
                                 <div class="form-group" id="enableuser">
                                     <div class="input-group">
                                         <span class="input-group-addon" id="sizing-addon2">dusa-</span>
-                                        <input type="text" id="useridinput" class="form-control" placeholder="0001" aria-label="Username" aria-describedby="sizing-addon2">
+                                        <input type="text" name = "useridinput" id="useridinput" class="form-control" placeholder="0001" aria-label="Username" aria-describedby="sizing-addon2">
                                     </div>
                                 </div>
                             </div>
@@ -116,28 +116,28 @@
                                 </div>
                                 <div class="form-group" id="enablelocation">
                                     <div class="input-group">
-                                        <select id="select" class="custom-select form-control" placeholder="Select a Location">
-                                            <option selected>Select a Location</option>
-                                            <option value="1">Air Bar</option>
-                                            <option value="2">College Shop</option>
-                                            <option value="3">Dental Café</option>
-                                            <option value="4">DJCAD Cantina</option>
-                                            <option value="5">DOJ Catering</option>
-                                            <option value="6">DUSA The Union - Marketplace</option>
-                                            <option value="7">DUSA The Union Online</option>
-                                            <option value="8">Ents</option>
-                                            <option value="9">Floor on Five</option>
-                                            <option value="10">Food on Four</option>
-                                            <option value="11">Level 2, Reception</option>
-                                            <option value="12">Liar Bar</option>
-                                            <option value="13">Library</option>
-                                            <option value="14">Mono</option>
-                                            <option value="15">Ninewells Shop</option>
-                                            <option value="16">Online Dundee University Students Association</option>
-                                            <option value="17">Premier Shop - Yoyo Accept</option>
-                                            <option value="18">Premier Shop</option>
-                                            <option value="19">Remote Campus Shop</option>
-                                            <option value="20">Spare</option>
+                                        <select id="select" class="custom-select form-control" placeholder="Select a Location" name = "select" required>
+                                            <!--<option selected>Air Bar</option>-->
+                                            <option value="Air Bar">Air Bar</option>
+                                            <option value="College Shop">College Shop</option>
+                                            <option value="Dental Café">Dental Café</option>
+                                            <option value="DJCAD Cantina">DJCAD Cantina</option>
+                                            <option value="DOJ Catering">DOJ Catering</option>
+                                            <option value="DUSA The Union - Marketplace">DUSA The Union - Marketplace</option>
+                                            <option value="DUSA The Union Online">DUSA The Union Online</option>
+                                            <option value="Ents">Ents</option>
+                                            <option value="Floor Five">Floor Five</option>
+                                            <option value="Food on Four">Food on Four</option>
+                                            <option value="Level 2, Reception">Level 2, Reception</option>
+                                            <option value="Liar Bar">Liar Bar</option>
+                                            <option value="Library">Library</option>
+                                            <option value="Mono">Mono</option>
+                                            <option value="Ninewells Shop">Ninewells Shop</option>
+                                            <option value="Online Dundee University Students Association">Online Dundee University Students Association</option>
+                                            <option value="Premier Shop - Yoyo Accept">Premier Shop - Yoyo Accept</option>
+                                            <option value="Premier Shop">Premier Shop</option>
+                                            <option value="Remote Campus Shop">Remote Campus Shop</option>
+                                            <option value="Spare">Spare</option>
                                         </select>
                                     </div>
                                 </div>
@@ -228,7 +228,7 @@
             }
             result = google.visualization.data.group(data, [2], [{'column': 7, 'aggregation': google.visualization.data.sum, 'type': 'number'}]);
             var table = new google.visualization.Table(document.getElementById('table_div'));
-            table.draw(result, {width: '40%', height: '100%', page: 'enabled', allowHTML: 'true', columns: ''});
+            table.draw(data, {width: '75%', height: '100%', page: 'enabled', allowHTML: 'true', columns: ''});
         }
          
 
