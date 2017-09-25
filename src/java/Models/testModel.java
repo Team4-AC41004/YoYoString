@@ -17,6 +17,7 @@ import Beans.testBean;
 /**
  *
  * @author Philipp
+ * Updated 25/09/2017 13:30
  */
 public class testModel {
     
@@ -31,14 +32,9 @@ public class testModel {
             
             ResultSet resultSet = null;
             List listOfJSONObjects = new LinkedList(); // Do you need to specify type of objects in the LinkedList? Like ArrayList<myBeanNameBlabla> ?
-            JSONObject jsonObj = new JSONObject();
+            
             Statement statement = conn.createStatement();
             String delimiters = "[-: .]";
-            
-            // Prepared Statement if it's "hardcoded" and can't be changed or influenced by user.
-         /* String query = "SELECT * FROM databaseTableName LIMIT 0, 100;";
-            PreparedStatement pstm = conn.prepareStatement(query);
-            resultSet = pstm.executeQuery(); */
             
             // Select which Data to pull from DB and store in resultset.
             resultSet = statement.executeQuery("SELECT * FROM test LIMIT 0,100");
@@ -54,7 +50,14 @@ public class testModel {
                 // Date and Time are special and must be processed a bit.
                 String dateAndTime  = resultSet.getString("DateAndTime"); //Date is stored in raw format: date = 2014-12-13 12:30.12.0
                 String[] parsedDateTime = dateAndTime.split(delimiters); //Date is then parsed, storing each number as a string in the array//parseddate = [2014, 12, 10, 12, 30, 12, 0 ]    Each member is a string
+                
+                //Dirty Hack to append date to correct month in google charts, forgive me for my sins. (ﾉಥ益ಥ）ﾉ
+                int fixmonth = Integer.parseInt(parsedDateTime[1]);
+                fixmonth -= 1;
+                parsedDateTime[1] = ""+fixmonth;
+                
                 int[] finalDateTime = new int[parsedDateTime.length];
+                
                 for (int i = 0; i < parsedDateTime.length; i++)
                 { finalDateTime[i] = Integer.parseInt(parsedDateTime[i]); }//parseddate is then converted from a string into an int array so that it can be used by google charts//finaldate = [2014, 12, 10, 12, 30, 12, 0 ]    Each member is an int
                 
@@ -71,9 +74,6 @@ public class testModel {
                 
                 // Add the jsonData object to the list.
                 listOfJSONObjects.add(jsonData);
-                
-                // Chris sticks the list into another JSONObject and then sends this via out.print
-                // Check if that's needed or if that's just due to him doing it in .jsp
             }
             
             // Return the list that contains all the retrieved data. (This will be called by the Servlet).
@@ -122,9 +122,9 @@ public class testModel {
             
             conn.close();
             return listOfTestBeans;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally { //finally runs before a return in the try block
+        } catch (SQLException e) { e.printStackTrace(); } 
+        finally { 
+        // finally runs before a return in the try block.
             if (conn != null && !conn.isClosed()) {
                 conn.close();
             }
@@ -132,20 +132,4 @@ public class testModel {
         
         return null; // DB Conn failed or no data found.
     }
-    
-    
 }
-
-
-                // === Using a selfmade Bean ===
-                // Make a new Bean Object which will hold this row of data.
-                //testBean testBeanObj = new testBean();
-                
-                // Store the data of the ResultSet in the Bean.
-                //testBeanObj.setDateAndTime( resultSet.getDate("DateAndTime") );
-                //testBeanObj.setOutletRef(
-                //testBeanObj.setOutletName(
-                //testBeanObj.setCashSpent(
-                
-                // Add Bean to the list.
-                //listOfBeans.add(testBeanObj);
