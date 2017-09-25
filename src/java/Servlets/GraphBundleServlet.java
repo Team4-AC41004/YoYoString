@@ -1,13 +1,6 @@
-/*
- * Don't change this. It's a template, so copy paste and adjust for your needs.
- */
 package Servlets;
 
-import Beans.LoggedIn;
-import Models.testModel;
-import Beans.testBean;
-
-
+import Models.GraphBundleModel;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -19,15 +12,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Philipp
- * Updated 25/09/2017 13:30
  */
-@WebServlet(name = "testServlet", urlPatterns = {"/testServlet"})
-public class testServlet extends HttpServlet {
+@WebServlet(name = "GraphBundleServlet", urlPatterns = {"/GraphBundleServlet"})
+public class GraphBundleServlet extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -41,16 +32,16 @@ public class testServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        // Runs when website is called.
-        testModel testModelObj = new testModel();
+        GraphBundleModel graphBundleModelObj = new GraphBundleModel();
         try 
         {
             // Retrieve the attribute that holds all data which was retrieved by the Model from the Database.
-            request.setAttribute("JSONListAttribute", testModelObj.getJSONObjectList() ); 
+            request.setAttribute("graphBundleAttribute", graphBundleModelObj.getJSONObjectList() ); // getUniqueCustomers
+            request.setAttribute("fuck", graphBundleModelObj.getUniqueCustomers() );
         } 
         catch (SQLException ex) { Logger.getLogger(testServlet.class.getName()).log(Level.SEVERE, null, ex); }
         
-        RequestDispatcher rd = request.getRequestDispatcher("/testJSP.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/graphBundleJSP.jsp");
         rd.forward(request, response);
     }
 
@@ -65,16 +56,9 @@ public class testServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Runs when POST method is used to direct to page. Not used in the test*.* templates, here it's GET that's running.
-        testModel testModelObj = new testModel();
-        try 
-        { 
-            // Retrieve the attribute that holds all data which was retrieved by the Model from the Database.
-                request.setAttribute("JSONListAttribute", testModelObj.getJSONObjectList() ); 
-        }
-        catch (SQLException ex) { Logger.getLogger(testServlet.class.getName()).log(Level.SEVERE, null, ex); }
-        
-        RequestDispatcher rd = request.getRequestDispatcher("/testJSP.jsp");
+      
+        // Not currently used.
+        RequestDispatcher rd = request.getRequestDispatcher("/graphBundleJSP.jsp");
         rd.forward(request, response);
     }
 
@@ -85,7 +69,7 @@ public class testServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "I like Servlets. - Sufea2k17";
+        return "This is GraphBundleServlet.";
     }// </editor-fold>
 
 }

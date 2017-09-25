@@ -2,6 +2,7 @@
     Document   : testJSP
     Created on : 18-Sep-2017, 15:00:03
     Author     : Philipp
+    Updated 25/09/2017 13:30
         
     Don't change this. It's a template, so copy paste and adjust for your needs.
 --%>
@@ -73,65 +74,9 @@
                     ]]);
                 }
                      
-                        
-                     /* 
-                for (var i = 0; i < jsonListOfDBdata.; i++)
-                {
-                    console.log(queryObject.empdetails[i]);
-    
-                    var name = queryObject.empdetails[i].UserID;
-    
-                    console.log(queryObject.empdetails[i].UserID);
-                    var empid = queryObject.empdetails[i].CashSpent;
-                    console.log(queryObject.empdetails[i].CashSpent);
-                    var transid = queryObject.empdetails[i].TransactionID;
-                    console.log(queryObject.empdetails[i].TransactionID);
-                    
-                    data.addRows([
-                        [transid,empid]
-                    ]);
-                } */
-                
-
                 var table = new google.visualization.Table(document.getElementById('table_div'));
-                table.draw(data, { width: '100%', height: '100%', page: 'enabled'});
-                
-                
-                
-                
-                // === Java
-                //ArrayList<ProgrammeOfStudy> pos = (ArrayList<ProgrammeOfStudy>) request.getAttribute("items");
-                <% 
-                  /*  request.getAttribute("JSONListAttribute");
-                    List theJSONList = (LinkedList) request.getAttribute("JSONListAttribute");
-                    System.out.println("testJSP.jsp: theJSONList: " + theJSONList); */
-                    // TODO: Rewrite into Javascript. Get the list of Json objects, then use it to populate table.
-                    //ArrayList<testBean> listOfTestBeanos = (ArrayList<testBean>) request.getAttribute("JSONListAttribute");
-                    //List listWithJSONattribute = (LinkedList) request.getAttribute("JSONListAttribute");
-                    
-                    
-                   /* 
-                for (int a=0; a < listOfTestBeanos.size(); a++)
-                {//pos.get(i).getID()
-                    Date dateAndTime = listOfTestBeanos.get(a).getDateAndTime();
-                    System.out.println();
-                    String outletName = listOfTestBeanos.get(a).getOutletName();
-                    int outletRef = listOfTestBeanos.get(a).getOutletRef();
-                    float cashSpent = listOfTestBeanos.get(a).getCashSpent();
-                    
-                    System.out.println("TESTICLE DEBUG MSG"); 
-                    
-                    //data.addRows( [ [dateAndTime,outletName,outletRef,cashSpent] ] );
-                } */
-                
-                        
-                        
-                  %> 
+                table.draw(data, { width: '60%', height: '100%'});
             }
-
         </script>
-
-        
-        
     </body>
 </html>
