@@ -24,37 +24,11 @@ import javax.servlet.http.HttpSession;
 /**
  *
  * @author Philipp
+ * Updated 25/09/2017 13:30
  */
 @WebServlet(name = "testServlet", urlPatterns = {"/testServlet"})
 public class testServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet testServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet testServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -67,8 +41,7 @@ public class testServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        System.out.println("doGet in testServlet.java.");
-        
+        // Runs when website is called.
         testModel testModelObj = new testModel();
         try 
         {
@@ -77,7 +50,6 @@ public class testServlet extends HttpServlet {
         } 
         catch (SQLException ex) { Logger.getLogger(testServlet.class.getName()).log(Level.SEVERE, null, ex); }
         
-        System.out.println("after try in doPost in testServlet.java");
         RequestDispatcher rd = request.getRequestDispatcher("/testJSP.jsp");
         rd.forward(request, response);
     }
@@ -93,35 +65,17 @@ public class testServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        System.out.println("doPost in testServlet.java.");
-        // None of this is done.
-        HttpSession session = request.getSession();
-        LoggedIn loggedin = (LoggedIn) session.getAttribute("loggedin");
+        // Runs when POST method is used to direct to page. Not used in the test*.* templates, here it's GET that's running.
         testModel testModelObj = new testModel();
-        
-
-        //if (request.getParameter("type").equals("To Philipp's Test Page")) // This is weird. "type"?? why not "value" ?
-        //{
-            //request.setAttribute("type", "pos");
-            try 
-            { 
-                System.out.println("try in doPost in testServlet.java");
-                //request. ?
-                //session.setAttribute("testAttribute", testModelObj.getBeanList() );
-                
-                // JSONObject
+        try 
+        { 
+            // Retrieve the attribute that holds all data which was retrieved by the Model from the Database.
                 request.setAttribute("JSONListAttribute", testModelObj.getJSONObjectList() ); 
-            } catch (SQLException ex) {
-                Logger.getLogger(testServlet.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("catch in doPost in testServlet.java");
-            }
-            System.out.println("after try in doPost in testServlet.java");
-            RequestDispatcher rd = request.getRequestDispatcher("/testJSP.jsp");
-            rd.forward(request, response);
-            
-        //}
+        }
+        catch (SQLException ex) { Logger.getLogger(testServlet.class.getName()).log(Level.SEVERE, null, ex); }
         
+        RequestDispatcher rd = request.getRequestDispatcher("/testJSP.jsp");
+        rd.forward(request, response);
     }
 
     /**
