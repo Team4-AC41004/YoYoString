@@ -56,8 +56,8 @@ public class GraphBundleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+      
         // Not currently used.
-        
         RequestDispatcher rd = request.getRequestDispatcher("/graphBundleJSP.jsp");
         rd.forward(request, response);
     }
