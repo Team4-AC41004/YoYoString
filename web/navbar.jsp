@@ -47,6 +47,9 @@
                             <li class="nav-item">
                                     <a class="nav-link" href="AdminOptions"> Admin Options</a>
                             </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="tribes.jsp"> View Tribes</a>
+                            </li>
                             
                             <%} else {%>
                             <li class="nav-item">

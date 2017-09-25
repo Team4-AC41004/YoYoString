@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
  * A Bean is a template Class to hold Data that you specify in it. The Model retrieves Data from the Database and stores it in Beans.
  * @author Philipp
  */
-public class VaDBean {
+public class TribeBean {
      
     // Example showing all Database entries. Private, as only intended to be modified via public Get/Set below.
     //private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // Date deprecated...?
@@ -23,7 +23,7 @@ public class VaDBean {
     private float  cashSpent   = 0;         // DB: CashSpent of datatype DECIMAL
     private float  discount    = 0;         // DB: Discount of datatype DECIMAL
     private float  total       = 0;         // DB: Total of datatype DECIMAL
-    
+    private int    transactions= 0;
     // DB: TransactionID of type INT set to autoincrement. Just for your information that this exists.
     
    
@@ -51,6 +51,8 @@ public class VaDBean {
     
     public void  setTotal(float newTotal) { total = newTotal; }
     public float getTotal() { return total; }
+    
+    
 }
 /* 
 

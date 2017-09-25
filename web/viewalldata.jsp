@@ -28,7 +28,9 @@
                 $.datepicker.setDefaults({
                     minDate: new Date(2015, 7, 24),
                     maxDate: "+1d",
-                    changeYear: true
+                    changeYear: true,
+                    altFormat: "yy-mm-dd",
+                    dateFormat: "yy-mm-dd"
                 });
                 $("#startdatepicker").datepicker({
                     defaultDate: new Date(2015, 7, 24)
