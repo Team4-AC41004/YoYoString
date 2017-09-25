@@ -15,6 +15,8 @@
         <h1>Welcome to graphBundleJSP.jsp</h1>
         <div id="columnchart_material" style="width: 1000px; height: 600px;"></div>
         <br>
+        <div id="table_div2"></div>
+        <br>
         <div id="table_div"></div> 
         
         
@@ -69,6 +71,51 @@
                 var colChart = new google.charts.Bar(document.getElementById('columnchart_material'));
                 colChart.draw(columnChart, google.charts.Bar.convertOptions(optionsColChart));
 
+                // Table for Unique Users.
+                // Library Premier RemoteCampusShop
+                var tableForUniqueUsers = new google.visualization.DataTable();
+                tableForUniqueUsers.addColumn('number', 'All Outlets');
+                tableForUniqueUsers.addColumn('number', 'Library');
+                tableForUniqueUsers.addColumn('number', 'Dental Café and Spare');
+                tableForUniqueUsers.addColumn('number', 'Air Bar');
+                tableForUniqueUsers.addColumn('number', 'Ents and Level 2, Reception');
+                tableForUniqueUsers.addColumn('number', 'Remote Campus Shop and Premier Shop - Yoyo Accept');
+                tableForUniqueUsers.addColumn('number', 'Liar Bar');
+                tableForUniqueUsers.addColumn('number', 'Mono');
+                tableForUniqueUsers.addColumn('number', 'Food on Four');
+                tableForUniqueUsers.addColumn('number', 'Floor Five');
+                tableForUniqueUsers.addColumn('number', 'DOJ Catering and DJCAD Catina');
+                tableForUniqueUsers.addColumn('number', 'DUSA The Union - Marketplace and Online DUSA and DUSA The Union Online');
+                tableForUniqueUsers.addColumn('number', 'Premier Shop');
+                tableForUniqueUsers.addColumn('number', 'College Shop');
+                tableForUniqueUsers.addColumn('number', 'Ninewells Shop');
+                
+                var tableData = <%=request.getAttribute("fuck") %>
+                
+                tableForUniqueUsers.addRows
+                ([[ 
+                        tableData[0].TotalYoyoCustomers,
+                        tableData[1].a238,
+                        tableData[2].a239,
+                        tableData[3].a236,
+                        tableData[4].a243,
+                        tableData[5].a343,
+                        tableData[6].a241,
+                        tableData[7].a242,
+                        tableData[8].a240,
+                        tableData[9].a237,
+                        tableData[10].a235,
+                        tableData[11].a456,
+                        tableData[12].a2676,
+                        tableData[13].a2677,
+                        tableData[14].a2679
+                ]]);
+                     
+                var fucker = new google.visualization.Table(document.getElementById('table_div2'));
+                fucker.draw(tableForUniqueUsers, { width: '100%', height: '100%'});
+                
+                // End Table for unique Users.
+                
                 // Table.
                 var data = new google.visualization.DataTable();
             
