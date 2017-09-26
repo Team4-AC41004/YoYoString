@@ -24,7 +24,7 @@ import org.json.JSONObject;
  */
 public class AllDataModel {
     
-    public List getJSONObjectList(String startdate, String enddate, String userid, String location) throws SQLException{
+    public List getJSONObjectList(String startdate, String enddate, String userid, String[] location) throws SQLException{
         
         Connection conn = null;
         
@@ -46,31 +46,23 @@ public class AllDataModel {
             
             String query="SELECT * FROM disbursals";
             
+            //"!" indicates null, since this method cannot be accessed with null values
             if (!startdate.equals("!")){
                 useDates = true;
             }
             if (!userid.equals("!")){
                 useUserid = true;
             }
-            if (!location.equals("!") ){
-                    //HOW MANY TIMES TO USE LOCATION?
+            if (!location[0].equals("!") ){
                     useLocation = true;
-            }
-            
-            String[] locations = processLocation(location);
-            
-            System.out.println("userid in model: " +userid);
-            System.out.println("using dates: " + useDates);
-            System.out.println("using location: " + useLocation);
-            System.out.println("using userid: " + useUserid);
-            
+            }   
             
             if (useDates && useUserid && useLocation){
-                query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + locations[0]+ "'";
+                query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
                 //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND OutletName ='" + location[0];
                 
-                for (int i=1; i<locations.length; i++){
-                 query = query + " OR OutletName ='" +locations[i]+ "'";
+                for (int i=1; i<location.length; i++){
+                 query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }
@@ -81,18 +73,18 @@ public class AllDataModel {
                 query = "SELECT * FROM disbursals WHERE DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
             }
             else if (useDates==false && useUserid && useLocation){
-                query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND (OutletName ='" +locations[0]+ "'";
+                query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND (OutletName ='" +location[0]+ "'";
                 
-                for (int i=1; i<locations.length; i++){
-                 query = query + " OR OutletName ='" +locations[i]+ "'";
+                for (int i=1; i<location.length; i++){
+                 query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }
             else if (useDates==false && useUserid==false && useLocation){
-                query = "SELECT * FROM disbursals WHERE (OutletName ='" +locations[0]+ "'";
+                query = "SELECT * FROM disbursals WHERE (OutletName ='" +location[0]+ "'";
                 
-                for (int i=1; i<locations.length; i++){
-                 query = query + " OR OutletName ='" +locations[i]+ "'";
+                for (int i=1; i<location.length; i++){
+                 query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }  
@@ -100,10 +92,10 @@ public class AllDataModel {
                 query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "'";
             }
             else if (useDates && useUserid==false && useLocation){
-                query = "SELECT * FROM disbursals WHERE DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + locations[0]+ "'";
+                query = "SELECT * FROM disbursals WHERE DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
                 
-                for (int i=1; i<locations.length; i++){
-                 query = query + " OR OutletName ='" +locations[i]+ "'";
+                for (int i=1; i<location.length; i++){
+                 query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }
@@ -156,8 +148,11 @@ public class AllDataModel {
     
     }
     
+    //I like this method and I don't want to remove it :D
+    //
     //@ param A String filled with locations (e.g. 'Premier Shop,Mono,Air Bar')
     //@return A String array with the given locations
+    /*
     public String[] processLocation(String locations){
         String[] myarray = new String[20];
         int locationCounter = 1;
@@ -189,7 +184,6 @@ public class AllDataModel {
         
         return finalArray;
     }
-    
-    
+*/    
     
 }
