@@ -38,10 +38,28 @@
                 $("#enddatepicker").datepicker();
             });
         </script>
+        
     </head>
+    <style>
+        .modal-dialog{
+            
+        all:initial;    
+        z-index: 999;
+        }
+        #google-visualization-charteditor-name-input
+        {
+            background-color: none;
+        }
+
+        
+    </style>
     <body>
         <%@ include file="navbar.jsp"%>
         <div class="content">
+            
+            <%  LoggedIn Loggedin = (LoggedIn) session.getAttribute("loggedin");
+                if (loggedin != null) {%>
+            
             <div class="jumbotron"> 
                 <div class="row">
                     <div class="col">
@@ -61,7 +79,7 @@
                 </div>
                 <hr class="my-2"/>
                 <div class="row">
-                    <form action="Search" method="POST">
+                    <form action="SearchData" method="POST">
                         <h1 class="display-4"> Search Options</h1> <br/>
                         <div class="row">
                             <div class="col-3">
@@ -73,10 +91,10 @@
                                 </div>
                                 <div class="form-group " id="enabledate">
                                     <label for="startdatepicker"> Start Date</label>
-                                    <input type="date" class="form-control" id="startdatepicker" placeholder="2000/01/01">
+                                    <input type="text" class="form-control" name = "startdatepicker" id="startdatepicker" placeholder="2000/01/01">
 
                                     <label for="enddatepicker"> End Date </label> 
-                                    <input type="text" class="form-control" id="enddatepicker" placeholder="3000/12/31"> 
+                                    <input type="text" class="form-control" name = "enddatepicker" id="enddatepicker" placeholder="3000/12/31"> 
                                 </div>
                             </div>
                             <div class="col-3">
@@ -89,7 +107,7 @@
                                 <div class="form-group" id="enableuser">
                                     <div class="input-group">
                                         <span class="input-group-addon" id="sizing-addon2">dusa-</span>
-                                        <input type="text" id="useridinput" class="form-control" placeholder="0001" aria-label="Username" aria-describedby="sizing-addon2">
+                                        <input type="text" name = "useridinput" id="useridinput" class="form-control" placeholder="0001" aria-label="Username" aria-describedby="sizing-addon2">
                                     </div>
                                 </div>
                             </div>
@@ -102,28 +120,28 @@
                                 </div>
                                 <div class="form-group" id="enablelocation">
                                     <div class="input-group">
-                                        <select id="select" class="custom-select form-control" placeholder="Select a Location">
-                                            <option selected>Select a Location</option>
-                                            <option value="1">Air Bar</option>
-                                            <option value="2">College Shop</option>
-                                            <option value="3">Dental Café</option>
-                                            <option value="4">DJCAD Cantina</option>
-                                            <option value="5">DOJ Catering</option>
-                                            <option value="6">DUSA The Union - Marketplace</option>
-                                            <option value="7">DUSA The Union Online</option>
-                                            <option value="8">Ents</option>
-                                            <option value="9">Floor on Five</option>
-                                            <option value="10">Food on Four</option>
-                                            <option value="11">Level 2, Reception</option>
-                                            <option value="12">Liar Bar</option>
-                                            <option value="13">Library</option>
-                                            <option value="14">Mono</option>
-                                            <option value="15">Ninewells Shop</option>
-                                            <option value="16">Online Dundee University Students Association</option>
-                                            <option value="17">Premier Shop - Yoyo Accept</option>
-                                            <option value="18">Premier Shop</option>
-                                            <option value="19">Remote Campus Shop</option>
-                                            <option value="20">Spare</option>
+                                        <select id="select" class=" form-control" placeholder="Select a Location" name = "select" required multiple > <!-- custom-select -->
+                                            <!--<option selected>Air Bar</option>-->
+                                            <option value="Air Bar">Air Bar</option>
+                                            <option value="College Shop">College Shop</option>
+                                            <option value="Dental Café">Dental Café</option>
+                                            <option value="DJCAD Cantina">DJCAD Cantina</option>
+                                            <option value="DOJ Catering">DOJ Catering</option>
+                                            <option value="DUSA The Union - Marketplace">DUSA The Union - Marketplace</option>
+                                            <option value="DUSA The Union Online">DUSA The Union Online</option>
+                                            <option value="Ents">Ents</option>
+                                            <option value="Floor Five">Floor Five</option>
+                                            <option value="Food on Four">Food on Four</option>
+                                            <option value="Level 2, Reception">Level 2, Reception</option>
+                                            <option value="Liar Bar">Liar Bar</option>
+                                            <option value="Library">Library</option>
+                                            <option value="Mono">Mono</option>
+                                            <option value="Ninewells Shop">Ninewells Shop</option>
+                                            <option value="Online Dundee University Students Association">Online Dundee University Students Association</option>
+                                            <option value="Premier Shop - Yoyo Accept">Premier Shop - Yoyo Accept</option>
+                                            <option value="Premier Shop">Premier Shop</option>
+                                            <option value="Remote Campus Shop">Remote Campus Shop</option>
+                                            <option value="Spare">Spare</option>
                                         </select>
                                     </div>
                                 </div>
@@ -136,8 +154,25 @@
                 </div>
                 
                 <div id="table_div"></div>
+                <br>
                 <div id="chart_div"></div>
+                <br>
+                <button class="btn btn-info" onclick="loadEditor()">Edit Chart</button>
+                <br><br>
+                
+                <button class="btn btn-primary" onclick="downloadPDF()">Download Graph in PDF</button>
+                <br>
             </div>
+                
+                <%} else { %><br/>
+            <div class="alert alert-info float-center" style="width: 100%;"role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style='cursor: pointer'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                It seems like you're not logged in. Click <a href='Login' class='alert-link'>Here</a> to log in!
+            </div>
+            <%}%>
+                
         </div>
          <script>
                 document.getElementById('datecheck').onchange = function() {
@@ -166,11 +201,15 @@
       google.charts.load('current', {'packages': ['table', 'corechart', 'charteditor']}); // table, corechart and can add more.
       google.charts.setOnLoadCallback(drawTable);
       
+      var chartEditor = null;
+      var wrapper = null;
+      var result = null;
+      var imageURI = null;
 
 
       function drawTable()
       {
-          google.charts.setOnLoadCallback(loadEditor);
+          google.charts.setOnLoadCallback(createEditor);
           var data = new google.visualization.DataTable();
           // Order of Columns must be remembered below when atting rows.
 
@@ -208,38 +247,99 @@
                               jsonListOfDBdata[a].TransactionID
                           ]]);
             }
-            var result = google.visualization.data.group(data, [2], [{'column': 7, 'aggregation': google.visualization.data.sum, 'type': 'number'}]);
+            result = google.visualization.data.group(data, [2], [{'column': 7, 'aggregation': google.visualization.data.sum, 'type': 'number'}]);
             var table = new google.visualization.Table(document.getElementById('table_div'));
-            table.draw(result, {width: '40%', height: '100%', page: 'enabled', allowHTML: 'true', columns: ''});
-            
+            table.draw(data, {width: '75%', height: '100%', page: 'enabled', allowHTML: 'true', columns: ''});
+        }
          
-         var chartEditor = null;
 
-        function loadEditor() {
+        function createEditor() {
           // Create the chart to edit.
-          var wrapper = new google.visualization.ChartWrapper({
-             'chartType':'LineChart',
-             'dataTable':result,
+            wrapper = new google.visualization.ChartWrapper({
+             'chartType':'PieChart',
+             'dataTable': result,
              
-             'options': {'title':'Population Density (people/km^2)', 'legend':'none'}
+             'options': {'title':'Stats', 'legend':'none'}
+             
           });
+          
 
           chartEditor = new google.visualization.ChartEditor();
           google.visualization.events.addListener(chartEditor, 'ok', redrawChart);
-          chartEditor.openDialog(wrapper, {});
+          
+          //imageURI = getChartWrapper().getChart().getImageURI();
+               
         }
+    
 
         // On "OK" save the chart to a <div> on the page.
         function redrawChart(){
           chartEditor.getChartWrapper().draw(document.getElementById('chart_div'));
+          
+          //For PDF
+          //imageURI = chartEditor.getChartWrapper().getChart().getImageURI();
+          
         }
-    }
+        
+        
+        function loadEditor(){
+            chartEditor.openDialog(wrapper, {});
+            
+        }
+        
+        
+        function downloadPDF() {
+            alert("hi1");
+            
+            var imgData;
+            //imgData = charteditor.getChart().getImageURI();
+            //imgData = chartEditor.getChartWrapper().getChart().getImageURI();
+
+            
+            alert("hi "+ imageURI);
+            
+            //var imgData = chart_div.innerHTML;
+            var doc = new jsPDF('landscape');
+            var width = doc.internal.pageSize.width;    
+            var height = doc.internal.pageSize.height; 
+            
+            //get dimention of image/graph
+            var img = new Image();
+            img.src = imgData;
+
+            img.onload = function(){
+              
+              //for some reason thee dimensions are correct/good only if I divide by 5???
+              var imgheight = img.height/5;
+              var imgwidth = img.width/5;
+                   
+            // if width of height are bigger than the page do not trim
+            if (imgwidth>width){
+                imgwidth=width;
+            }
+            if (imgheight>height){
+                imgheight=height;
+            }
+            
+            doc.addImage(imgData, 'PNG', 0, 10, imgwidth, imgheight);
+            //doc.addImage(imgData, 'PNG', 0, 10); //default dimentions? - graph is trimmed
+            
+            doc.setFontSize(20);
+            doc.text(15, 10, 'Chart PDF');
+            
+            //doc.output('datauri');            //opens in same window - doesn't work
+            //doc.output('dataurlnewwindow');   //opens in new window - opens but doesn't work
+            //doc.autoPrint();                  //doesn't work
+            doc.save("mygraph");
+            };        
+        }
        
         </script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.2/vivus.min.js" integrity="sha256-QkfKcx3kugootBtJEPpTKDsWEneddME3kXPoT5o3Yic=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        
         
     </body>
 </html>
