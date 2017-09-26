@@ -146,6 +146,30 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-4">
+                                <div class="form-group" id="enablelocation">
+                                <div class="input-group">
+
+                                <label>
+                                    Select Data to be Shown in Chart
+                                </label>
+                                    <div class="container">
+
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" id = "dateandtimeCHK">Date and Time</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" id = "outletReferenceCHK">Outlet Reference</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" id = "outletnameCHK">Outlet Name</label>
+                                    </div>
+
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            
                             <div class="col-3">
                                 <button type="submit" class="btn btn-info">Search</button>
                             </div>
@@ -194,6 +218,7 @@
                 };
         </script>
 
+
         <!-- Load the google chart loader. -->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type ="text/javascript">
@@ -205,10 +230,11 @@
       var wrapper = null;
       var result = null;
       var imageURI = null;
+      
 
 
       function drawTable()
-      {
+      { 
           google.charts.setOnLoadCallback(createEditor);
           var data = new google.visualization.DataTable();
           // Order of Columns must be remembered below when atting rows.
