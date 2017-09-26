@@ -44,7 +44,23 @@ public class AllDataModel {
             boolean useUserid = false;
             boolean useLocation = false;
             
-            String query="SELECT * FROM disbursals";
+            /////////////////////NEW///////////////////
+            /*String query = "SELECT ";
+            
+            if (attributes[0]=="!"){
+                query = query + "* ";
+            }else{
+                for (int i=0; i<attributes.length; i++){
+                    query = query + attributes[i];
+                }
+            }    
+            query = query + " FROM disbursals WHERE ";
+            */
+            /////////////////////NEW///////////////////
+            
+            
+            
+            String query="SELECT * FROM disbursals WHERE ";
             
             //"!" indicates null, since this method cannot be accessed with null values
             if (!startdate.equals("!")){
@@ -58,42 +74,57 @@ public class AllDataModel {
             }   
             
             if (useDates && useUserid && useLocation){
-                query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
+                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
                 //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND OutletName ='" + location[0];
-                
+                query = query + "UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
+
                 for (int i=1; i<location.length; i++){
                  query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }
             else if (useDates && useUserid && useLocation==false){
-                query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
+                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
+                query =  query + "UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
+
             }
             else if (useDates && useUserid==false && useLocation==false){
-                query = "SELECT * FROM disbursals WHERE DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
+                //query = "SELECT * FROM disbursals WHERE DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
+                query =  query + "DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
+
             }
             else if (useDates==false && useUserid && useLocation){
-                query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND (OutletName ='" +location[0]+ "'";
-                
+                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND (OutletName ='" +location[0]+ "'";
+                query =  query + "UserID='dusa-" +userid+ "' AND (OutletName ='" +location[0]+ "'";
+
                 for (int i=1; i<location.length; i++){
                  query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }
             else if (useDates==false && useUserid==false && useLocation){
-                query = "SELECT * FROM disbursals WHERE (OutletName ='" +location[0]+ "'";
-                
+                //query = "SELECT * FROM disbursals WHERE (OutletName ='" +location[0]+ "'";
+                query =  query + "(OutletName ='" +location[0]+ "'";
+
                 for (int i=1; i<location.length; i++){
                  query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }  
             else if (useDates==false && useUserid && useLocation==false){
-                query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "'";
+                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "'";
+                query =  query + "UserID='dusa-" +userid+ "'";
+
+            }
+            else if (useDates==false && useUserid==false && useLocation==false){
+                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "'";
+                query =  "SELECT * FROM disbursals";
+
             }
             else if (useDates && useUserid==false && useLocation){
-                query = "SELECT * FROM disbursals WHERE DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
-                
+                //query = "SELECT * FROM disbursals WHERE DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
+                query =  query + "DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
+
                 for (int i=1; i<location.length; i++){
                  query = query + " OR OutletName ='" +location[i]+ "'";
                 }

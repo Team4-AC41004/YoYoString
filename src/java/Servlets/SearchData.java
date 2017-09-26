@@ -44,6 +44,7 @@ public class SearchData extends HttpServlet{
         Date startdate = new Date();
         Date enddate = new Date();
         
+        ///////////////////////////////GET CUSTOM SEARCH INPUTS///////////////////////////
         if (request.getParameter("startdatepicker")!=null){
             startdateStr = request.getParameter("startdatepicker");
         }
@@ -75,10 +76,113 @@ public class SearchData extends HttpServlet{
             locationArray[0] = "!";
         }
         
+        ///////////////////////////////GET CUSTOM SEARCH INPUTS///////////////////////////
+        
+        String[] attributes = new String[10];
+        int[] attributesIntArray = new int[10];
+        int count = 0;
+        
+        ///////////////////////GET GRAPH INPUTS////////////////////
+        if (request.getParameter("dateandtimeCHK")!=null){
+            attributes[count] = request.getParameter("dateandtimeCHK");
+            count++;         
+            attributesIntArray[0] = 1;
+        }
+        else{
+            attributesIntArray[0] = 0;
+        }
+        if (request.getParameter("outletreferenceCHK")!=null){
+                attributes[count] = request.getParameter("outletreferenceCHK");
+                count++;  
+                attributesIntArray[1] = 1;
+        }
+        else{
+            attributesIntArray[1] = 0;
+        }
+        if (request.getParameter("outletnameCHK")!=null){
+            attributes[count] = request.getParameter("outletnameCHK");
+            count++;  
+            attributesIntArray[2] = 1;
+        }
+        else{
+            attributesIntArray[2] = 0;
+        }
+        if (request.getParameter("useridCHK")!=null){
+            attributes[count] = request.getParameter("useridCHK");
+            count++;  
+            attributesIntArray[3] = 1;
+        }
+        else{
+            attributesIntArray[3] = 0;
+        }
+        if (request.getParameter("transactiontypeCHK")!=null){
+            attributes[count] = request.getParameter("transactiontypeCHK");
+            count++;     
+            attributesIntArray[4] = 1;
+        }
+        else{
+            attributesIntArray[4] = 0;
+        }
+        if (request.getParameter("cashspentCHK")!=null){
+            attributes[count] = request.getParameter("cashspentCHK");
+            count++;   
+            attributesIntArray[5] = 1;
+        }
+        else{
+            attributesIntArray[5] = 0;
+        }
+        if (request.getParameter("dateandtimeCHK")!=null){
+            attributes[count] = request.getParameter("dateandtimeCHK");
+            count++;    
+            attributesIntArray[6] = 1;
+        }
+        else{
+            attributesIntArray[6] = 0;
+        }
+        if (request.getParameter("discountCHK")!=null){
+            attributes[count] = request.getParameter("discountCHK");
+            count++;
+            attributesIntArray[7] = 1;
+        }
+        else{
+            attributesIntArray[7] = 0;
+        }
+        if (request.getParameter("totalCHK")!=null){
+            attributes[count] = request.getParameter("totalCHK");
+            count++;   
+            attributesIntArray[8] = 1;
+        }
+        else{
+            attributesIntArray[8] = 0;
+        }
+        if (request.getParameter("transactionidCHK")!=null){
+            attributes[count] = request.getParameter("transactionidCHK");
+            count++;  
+            attributesIntArray[9] = 1;
+        }
+        else{
+            attributesIntArray[9] = 0;
+        }
+        
+        String[] attributesReady = new String[count];
+        
+        if(count==0){
+            attributesReady = new String[1];
+        }else{
+            attributesReady = new String[count];
+        }
+        
+        for (int i=0; i<count; i++){
+            attributesReady[i] = attributes[i];        
+        }       
+        ///////////////////////GET GRAPH INPUTS////////////////////
+        
         AllDataModel data = new AllDataModel(); // This class contains methods for user queries
         boolean matched = false;
         try{
             request.setAttribute("JSONListAttribute", data.getJSONObjectList(startdateStr, enddateStr, userid, locationArray) ); 
+            request.setAttribute("attributestoshow", attributesReady);
+            request.setAttribute("attributestoshowINT", attributesIntArray);
             matched = true;
         }catch(Exception e){
             System.out.println("Error getting search data.");
