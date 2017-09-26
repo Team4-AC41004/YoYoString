@@ -39,7 +39,8 @@ public class SearchData extends HttpServlet{
         String startdateStr = null;
         String enddateStr = null;
         String userid = null;
-        String location= null;
+        String location = null;
+        String[] locationArray = null;
         Date startdate = new Date();
         Date enddate = new Date();
         
@@ -58,25 +59,26 @@ public class SearchData extends HttpServlet{
         
         if (request.getParameter("useridinput")!=null){
                 userid = request.getParameter("useridinput");
-                //if (checkInput(userid)==false){
-                //    userid="!";
-                //}
+                if (checkInput(userid)==false){
+                   userid="!";
+                }
         }
         else{
             userid="!";
         }
         if (request.getParameter("select")!=null){
-            location = request.getParameter("select");
+            locationArray = new String[ request.getParameterValues("select").length];
+            locationArray = request.getParameterValues("select");
         }   
         else{
-            location="!";
+            locationArray = new String[1];
+            locationArray[0] = "!";
         }
         
         AllDataModel data = new AllDataModel(); // This class contains methods for user queries
         boolean matched = false;
         try{
-            //data.getJSONObjectList(startdate, enddate, userid, location);
-            request.setAttribute("JSONListAttribute", data.getJSONObjectList(startdateStr, enddateStr, userid, location) ); 
+            request.setAttribute("JSONListAttribute", data.getJSONObjectList(startdateStr, enddateStr, userid, locationArray) ); 
             matched = true;
         }catch(Exception e){
             System.out.println("Error getting search data.");
@@ -97,14 +99,27 @@ public class SearchData extends HttpServlet{
         }         
     }
     
-    public boolean checkInput(String input){
-        for (int i=0; i<input.length(); i++)
-        {
-            if(input.charAt(i)!='0' || input.charAt(i)!='1' || input.charAt(i)!='2' || input.charAt(i)!='3' || input.charAt(i)!='4' || input.charAt(i)!='5' || input.charAt(i)!='6' || input.charAt(i)!='7' || input.charAt(i)!='8' || input.charAt(i)!='9'){
+    public boolean checkInput(String input){   
+            if (input.matches("[0-9]+") && input.length() > 2) {
+                return true;
+            }
+            else{
                 return false;
             }
-        }
-        return true;
+    }
+    
+    /** 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
+    {    
+        RequestDispatcher rd = request.getRequestDispatcher("/viewalldata.jsp");
+        rd.forward(request,response);
     }
 
 }

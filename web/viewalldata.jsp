@@ -56,6 +56,10 @@
     <body>
         <%@ include file="navbar.jsp"%>
         <div class="content">
+            
+            <%  LoggedIn Loggedin = (LoggedIn) session.getAttribute("loggedin");
+                if (loggedin != null) {%>
+            
             <div class="jumbotron"> 
                 <div class="row">
                     <div class="col">
@@ -116,7 +120,7 @@
                                 </div>
                                 <div class="form-group" id="enablelocation">
                                     <div class="input-group">
-                                        <select id="select" class="custom-select form-control" placeholder="Select a Location" name = "select" required>
+                                        <select id="select" class=" form-control" placeholder="Select a Location" name = "select" required multiple > <!-- custom-select -->
                                             <!--<option selected>Air Bar</option>-->
                                             <option value="Air Bar">Air Bar</option>
                                             <option value="College Shop">College Shop</option>
@@ -150,9 +154,25 @@
                 </div>
                 
                 <div id="table_div"></div>
+                <br>
                 <div id="chart_div"></div>
+                <br>
                 <button class="btn btn-info" onclick="loadEditor()">Edit Chart</button>
+                <br><br>
+                
+                <button class="btn btn-primary" onclick="downloadPDF()">Download Graph in PDF</button>
+                <br>
             </div>
+                
+                <%} else { %><br/>
+            <div class="alert alert-info float-center" style="width: 100%;"role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style='cursor: pointer'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                It seems like you're not logged in. Click <a href='Login' class='alert-link'>Here</a> to log in!
+            </div>
+            <%}%>
+                
         </div>
          <script>
                 document.getElementById('datecheck').onchange = function() {
@@ -184,6 +204,7 @@
       var chartEditor = null;
       var wrapper = null;
       var result = null;
+      var imageURI = null;
 
 
       function drawTable()
@@ -238,22 +259,79 @@
              'chartType':'PieChart',
              'dataTable': result,
              
-             'options': {'title':'Population Density (people/km^2)', 'legend':'none'}
+             'options': {'title':'Stats', 'legend':'none'}
+             
           });
+          
 
           chartEditor = new google.visualization.ChartEditor();
           google.visualization.events.addListener(chartEditor, 'ok', redrawChart);
+          
+          //imageURI = getChartWrapper().getChart().getImageURI();
+               
         }
     
 
         // On "OK" save the chart to a <div> on the page.
         function redrawChart(){
           chartEditor.getChartWrapper().draw(document.getElementById('chart_div'));
+          
+          //For PDF
+          //imageURI = chartEditor.getChartWrapper().getChart().getImageURI();
+          
         }
         
         
         function loadEditor(){
             chartEditor.openDialog(wrapper, {});
+            
+        }
+        
+        
+        function downloadPDF() {
+            alert("hi1");
+            
+            var imgData;
+            //imgData = charteditor.getChart().getImageURI();
+            //imgData = chartEditor.getChartWrapper().getChart().getImageURI();
+
+            
+            alert("hi "+ imageURI);
+            
+            //var imgData = chart_div.innerHTML;
+            var doc = new jsPDF('landscape');
+            var width = doc.internal.pageSize.width;    
+            var height = doc.internal.pageSize.height; 
+            
+            //get dimention of image/graph
+            var img = new Image();
+            img.src = imgData;
+
+            img.onload = function(){
+              
+              //for some reason thee dimensions are correct/good only if I divide by 5???
+              var imgheight = img.height/5;
+              var imgwidth = img.width/5;
+                   
+            // if width of height are bigger than the page do not trim
+            if (imgwidth>width){
+                imgwidth=width;
+            }
+            if (imgheight>height){
+                imgheight=height;
+            }
+            
+            doc.addImage(imgData, 'PNG', 0, 10, imgwidth, imgheight);
+            //doc.addImage(imgData, 'PNG', 0, 10); //default dimentions? - graph is trimmed
+            
+            doc.setFontSize(20);
+            doc.text(15, 10, 'Chart PDF');
+            
+            //doc.output('datauri');            //opens in same window - doesn't work
+            //doc.output('dataurlnewwindow');   //opens in new window - opens but doesn't work
+            //doc.autoPrint();                  //doesn't work
+            doc.save("mygraph");
+            };        
         }
        
         </script>
@@ -261,6 +339,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.2/vivus.min.js" integrity="sha256-QkfKcx3kugootBtJEPpTKDsWEneddME3kXPoT5o3Yic=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        
         
     </body>
 </html>

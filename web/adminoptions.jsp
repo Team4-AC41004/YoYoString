@@ -26,13 +26,10 @@
 
             <%  LoggedIn Loggedin = (LoggedIn) session.getAttribute("loggedin");
                 if (loggedin != null) {
-                    //is the user trying to acces this page is not an admin
+                    //is the user trying to accesss this page is not an admin
+                    
                     if (Loggedin.getIsAdmin()!=1){
-                    %>
-                        <script>
-                        redirectUser();
-                        </script>
-                    <%
+                        request.getRequestDispatcher("./").forward(request, response);
                     }
             %> 
             <h3>Welcome <%=Loggedin.getUserid()%> !</h3> 
@@ -57,12 +54,7 @@
 
 
         </div>
-            <script type ="text/javascript">
-            function redirectUser() {
-                // similar behavior as an HTTP redirect
-                window.location.replace("./");
-            }    
-            
+            <script type ="text/javascript">            
             function CreateUserLink(){
                 window.location = 'CreateUser';  
             }
