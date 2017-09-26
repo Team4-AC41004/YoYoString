@@ -4,8 +4,8 @@
 package Servlets;
 
 import Beans.LoggedIn;
-import Models.TribeModel;
-import Beans.TribeBean;
+import Models.DayBreakerModel;
+import Beans.DayBreakerBean;
 
 
 import java.io.IOException;
@@ -25,8 +25,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Philipp
  */
-@WebServlet(name = "TribeServlet", urlPatterns = {"/Tribes"})
-public class TribeServlet extends HttpServlet {
+@WebServlet(name = "DayBreakerServlet", urlPatterns = {"/DayBreakers"})
+public class DayBreakerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,40 +45,30 @@ public class TribeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet TribeServlet</title>");            
+            out.println("<title>Servlet DayBreakerServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet TribeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DayBreakerServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
+   @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        System.out.println("doGet in TribeServlet.java.");
+        System.out.println("doGet in DayBreakerServlet.java.");
         
-        TribeModel TribeModelObj = new TribeModel();
+        DayBreakerModel DayBreakerModelObj = new DayBreakerModel();
         try 
         {
             // Retrieve the attribute that holds all data which was retrieved by the Model from the Database.
-            request.setAttribute("JSONListAttribute", TribeModelObj.getJSONObjectList() ); 
+            request.setAttribute("JSONListAttribute", DayBreakerModelObj.getJSONObjectList() ); 
         } 
-        catch (SQLException ex) { Logger.getLogger(TribeServlet.class.getName()).log(Level.SEVERE, null, ex); }
+        catch (SQLException ex) { Logger.getLogger(DayBreakerServlet.class.getName()).log(Level.SEVERE, null, ex); }
         
-        System.out.println("after try in doPost in TribeServlet.java");
-        RequestDispatcher rd = request.getRequestDispatcher("/tribes.jsp");
+        System.out.println("after try in doPost in DayBreakerServlet.java");
+        RequestDispatcher rd = request.getRequestDispatcher("/daybreakers.jsp");
         rd.forward(request, response);
     }
 
@@ -94,11 +84,11 @@ public class TribeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        System.out.println("doPost in TribeServlet.java.");
+        System.out.println("doPost in DayBreakerServlet.java.");
         // None of this is done.
         HttpSession session = request.getSession();
         LoggedIn loggedin = (LoggedIn) session.getAttribute("loggedin");
-        TribeModel TribeModelObj = new TribeModel();
+        DayBreakerModel DayBreakerModelObj = new DayBreakerModel();
         
 
         //if (request.getParameter("type").equals("To Philipp's Test Page")) // This is weird. "type"?? why not "value" ?
@@ -106,18 +96,18 @@ public class TribeServlet extends HttpServlet {
             //request.setAttribute("type", "pos");
             try 
             { 
-                System.out.println("try in doPost in TribeServlet.java");
+                System.out.println("try in doPost in DayBreakerServlet.java");
                 //request. ?
-                //session.setAttribute("TribeAttribute", TribeModelObj.getBeanList() );
+                //session.setAttribute("DayBreakerAttribute", DayBreakerModelObj.getBeanList() );
                 
                 // JSONObject
-                request.setAttribute("JSONListAttribute", TribeModelObj.getJSONObjectList() ); 
+                request.setAttribute("JSONListAttribute", DayBreakerModelObj.getJSONObjectList() ); 
             } catch (SQLException ex) {
-                Logger.getLogger(TribeServlet.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("catch in doPost in TribeServlet.java");
+                Logger.getLogger(DayBreakerServlet.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("catch in doPost in DayBreakerServlet.java");
             }
-            System.out.println("after try in doPost in TribeServlet.java");
-            RequestDispatcher rd = request.getRequestDispatcher("/tribes.jsp");
+            System.out.println("after try in doPost in DayBreakerServlet.java");
+            RequestDispatcher rd = request.getRequestDispatcher("/daybreakers.jsp");
             rd.forward(request, response);
             
         //}

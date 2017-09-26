@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="Beans.NightOwlBean"%>
+<%@page import="Beans.BookWormBean"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.*"%>
 <%@page import="java.util.Date"%>
@@ -16,7 +16,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-        <title>NightOwls</title>
+        <title>BookWorms</title>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -29,8 +29,6 @@
                 // Order of Columns must be remembered below when atting rows.
                 // Again, you might not need every single column+row.
                 data.addColumn('string', 'User ID');
-
-
                 // Get the Attribute which holds all data retrieved by Model.
                 var jsonListOfDBdata = <%=request.getAttribute("JSONListAttribute")%>;
                 //console.log("jsonListOfDBdata: " + jsonListOfDBdata + "length: " + jsonListOfDBdata.length);
@@ -69,7 +67,7 @@
                 function drawChart() {
                   var perc = google.visualization.arrayToDataTable([
                     ['Tribes', 'User Counts'],
-                    ['Night Owls',  NumofTribe],
+                    ['Book Worms',  NumofTribe],
                     ['All Users',  7877]
                   ]);
 
@@ -77,9 +75,8 @@
                   legend: 'label',
                   title: 'Percentage of Users',
                   pieSliceText: 'number',
-                  slices: { 1: {offset:0.2},},
                   is3D:'true',
-                  pieStartAngle: 135,
+
                 };
 
                   var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -101,7 +98,7 @@
         <div class="container" style="margin-top: 2.5%;">
             <div class="row">
                 <div class="col">
-                    <h1 class="display-4">Night Owls:</h1>
+                    <h1 class="display-4">Book Worms:</h1>
                     <hr class="my-2"/>
                 </div>
             </div>
@@ -117,7 +114,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th> Total Number of Nightowls </th>
+                                    <th> Total Number of Bookworms </th>
                                     <th> Total Number of Users </th>
                                 </tr>
                             </thead>

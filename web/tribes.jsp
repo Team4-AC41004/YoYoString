@@ -45,20 +45,27 @@
                                 of the peace and quiet provided at the Library, they are happy to go a bit further to
                                 ensure they're not bothered.</p><hr class="my-2"/>
                           
-                            <a class="btn btn-info" href="nightowls.jsp" class="btn btn-info">View Night Owls</a>
+                            <a class="btn btn-info" href="NightOwls" class="btn btn-info">View Night Owls</a>
                             
 
                         </div>
                         <div class="tab-pane fade" id="2" role="tabpanel" aria-labelledby="list-profile-list">
-                            <img class="rounded float-right" src="" style="width:200px; height:200px;"/>
+                            <img class="rounded float-right" src="img/daybreakers.png" style="width:200px; height:200px;"/>
                             <h2> The Daybreaker </h2> <br/>
                             <p> First to wake, first to bed - That's the motto of the Early Risers up and about
                                 before the rest of us have woken up for the day. Whether it's compiling data, 
                                 taking photos or making breakfast, the Daybreaker makes sure to get the most 
                                 of the magic hours where humanity sleeps, but the world moves.</p><hr class="my-2"/>
-                            <button type="button" class="btn btn-info">View Daybreakers</button>
+                            <a class="btn btn-info" href="DayBreakers">View Daybreakers</a>
                         </div>
-                        <div class="tab-pane fade" id="3" role="tabpanel" aria-labelledby="list-messages-list">GREAT</div>
+                        <div class="tab-pane fade" id="3" role="tabpanel" aria-labelledby="list-messages-list">
+                            <img class="rounded float-right" src="img/bookworm.png" style="width: 200px; height:200px;"/>
+                            <h2> The Bookworm </h2><br/>
+                            <p> The Library's the place to be - a bookworm knows this and when you've got your head in a book you 
+                                need a warm drink to keep you going! A large number of this users transactions have taken place in
+                                the library.</p><hr class='my-2'/>
+                            <a class="btn btn-info" href="bookworms">View BookWorms</a>
+                        </div>
                         <div class="tab-pane fade" id="4" role="tabpanel" aria-labelledby="list-settings-list">DAYS</div>
                         <div class="tab-pane fade" id="5" role="tabpanel" aria-labelledby="list-home-list">BREAK</div>
                         <div class="tab-pane fade" id="6" role="tabpanel" aria-labelledby="list-profile-list">DOWN</div>

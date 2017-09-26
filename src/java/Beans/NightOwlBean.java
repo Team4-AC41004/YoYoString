@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
  * A Bean is a template Class to hold Data that you specify in it. The Model retrieves Data from the Database and stores it in Beans.
  * @author Philipp
  */
-public class TribeBean {
+public class NightOwlBean {
      
     // Example showing all Database entries. Private, as only intended to be modified via public Get/Set below.
     //private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // Date deprecated...?

@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="Beans.NightOwlBean"%>
+<%@page import="Beans.DayBreakerBean"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.*"%>
 <%@page import="java.util.Date"%>
@@ -69,7 +69,7 @@
                 function drawChart() {
                   var perc = google.visualization.arrayToDataTable([
                     ['Tribes', 'User Counts'],
-                    ['Night Owls',  NumofTribe],
+                    ['Day Breakers',  NumofTribe],
                     ['All Users',  7877]
                   ]);
 
@@ -77,9 +77,8 @@
                   legend: 'label',
                   title: 'Percentage of Users',
                   pieSliceText: 'number',
-                  slices: { 1: {offset:0.2},},
                   is3D:'true',
-                  pieStartAngle: 135,
+
                 };
 
                   var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -101,7 +100,7 @@
         <div class="container" style="margin-top: 2.5%;">
             <div class="row">
                 <div class="col">
-                    <h1 class="display-4">Night Owls:</h1>
+                    <h1 class="display-4">Day Breakers:</h1>
                     <hr class="my-2"/>
                 </div>
             </div>
@@ -117,7 +116,7 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th> Total Number of Nightowls </th>
+                                    <th> Total Number of Daybreakers </th>
                                     <th> Total Number of Users </th>
                                 </tr>
                             </thead>

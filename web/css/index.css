@@ -41,5 +41,34 @@ nav
 
 .jumbotron
 {
-    margin-top: 5%;
+    margin-top: 2.5%;
 }
+.row-head
+{
+    font-size: 22pt;
+}
+.row-table
+{
+    background-color: red;
+}
+.row-table-odd
+{
+    background-color: blue;
+}
+.row-table-select
+{
+    
+}
+.row-table-hover
+{
+    
+}
+.cell-head
+{
+    
+}
+.cell-table
+{
+    
+}
+                                 

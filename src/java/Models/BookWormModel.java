@@ -12,14 +12,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.*;
 import org.json.JSONObject;
-import Beans.TribeBean;
+import Beans.BookWormBean;
 import sun.rmi.runtime.Log;
 
 /**
  *
- * @author Philipp
+ * @author Chris
  */
-public class TribeModel {
+public class BookWormModel {
     
     public List getJSONObjectList() throws SQLException
     {
@@ -42,7 +42,7 @@ public class TribeModel {
             resultSet = pstm.executeQuery(); */
             
             // Select which Data to pull from DB and store in resultset.
-            resultSet = statement.executeQuery("SELECT * FROM test WHERE DateAndTime>='2015-01-01 04:00:00' AND DateAndTime<='2016-01-01 04:00:00';");
+            resultSet = statement.executeQuery("SELECT * FROM bookworms GROUP BY UserID;");
             //resultSet = statement.executeQuery("SELECT * FROM test LIMIT 0, 100;");
 
             while (resultSet.next())
@@ -102,62 +102,7 @@ public class TribeModel {
     }
     
     
-    // This is the version where you use a self-made Bean, but for now we'll use JSONObjects due to google graphs.
-    public ArrayList<TribeBean> getBeanList() throws SQLException 
-    {
-        Connection conn      = null;
-        ResultSet resultSet  = null;
-        Statement statement  = null;
-        ArrayList<TribeBean> listOfTribeBeans = new ArrayList<>();
-
-        try 
-        {
-            conn      = DBConnection.createConnection();
-            statement = conn.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM test LIMIT 0,10");
-
-            while ( resultSet.next() ) 
-            {
-                // 1 resultSet is basically one row when you select *
-                // Make a new Bean Object which will store our data.
-                TribeBean TribeBeanObj = new TribeBean();
-                
-                // Store the Data from the ResultSet in the Bean object.
-                TribeBeanObj.setDateAndTime(resultSet.getDate("DateAndTime"));
-                TribeBeanObj.setOutletName (resultSet.getString("OutletName"));
-                TribeBeanObj.setOutletRef  (resultSet.getInt("OutletRef"));
-                TribeBeanObj.setCashSpent  (resultSet.getFloat("CashSpent"));
-                
-                // Add the Bean object to the list.
-                listOfTribeBeans.add(TribeBeanObj);
-            }
-            
-            conn.close();
-            return listOfTribeBeans;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally { //finally runs before a return in the try block
-            if (conn != null && !conn.isClosed()) {
-                conn.close();
-            }
-        }
-        
-        return null; // DB Conn failed or no data found.
-    }
     
     
 }
-
-
-                // === Using a selfmade Bean ===
-                // Make a new Bean Object which will hold this row of data.
-                //TribeBean TribeBeanObj = new TribeBean();
-                
-                // Store the data of the ResultSet in the Bean.
-                //TribeBeanObj.setDateAndTime( resultSet.getDate("DateAndTime") );
-                //TribeBeanObj.setOutletRef(
-                //TribeBeanObj.setOutletName(
-                //TribeBeanObj.setCashSpent(
-                
-                // Add Bean to the list.
-                //listOfBeans.add(TribeBeanObj);
+            //listOfBeans.add(NightowlBeanObj);
