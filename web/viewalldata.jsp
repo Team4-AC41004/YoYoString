@@ -124,7 +124,7 @@
                                             <!--<option selected>Air Bar</option>-->
                                             <option value="Air Bar">Air Bar</option>
                                             <option value="College Shop">College Shop</option>
-                                            <option value="Dental Café">Dental Café</option>
+                                            <option value="Dental Cafe">Dental Café</option>
                                             <option value="DJCAD Cantina">DJCAD Cantina</option>
                                             <option value="DOJ Catering">DOJ Catering</option>
                                             <option value="DUSA The Union - Marketplace">DUSA The Union - Marketplace</option>
@@ -146,6 +146,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Remove from here if this doesn't work -->
                             <div class="col-4">
                                 <div class="form-group" id="enablelocation">
                                 <div class="input-group">
@@ -155,19 +156,40 @@
                                 </label>
                                     <div class="container">
 
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" id = "dateandtimeCHK">Date and Time</label>
+                                        <div class="checkbox">
+                                        <label><input type="checkbox" name = "dateandtimeCHK" value = "Date and Time">Date and Time</label>
                                     </div>
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" id = "outletReferenceCHK">Outlet Reference</label>
+                                        <div class="checkbox">
+                                        <label><input type="checkbox" name = "outletreferenceCHK" value = "Outlet Reference">Outlet Reference</label>
                                     </div>
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" id = "outletnameCHK">Outlet Name</label>
+                                        <div class="checkbox">
+                                        <label><input type="checkbox" name = "outletnameCHK" value = "Outlet Name">Outlet Name</label>
+                                    </div>
+                                        <div class="checkbox">
+                                        <label><input type="checkbox" name = "useridCHK" value="User ID">User ID</label>
+                                    </div>
+                                        <div class="checkbox">
+                                        <label><input type="checkbox" name = "transactiontypeCHK" value="Transaction Type">Transaction Type</label>
+                                    </div>
+                                        <div class="checkbox">
+                                        <label><input type="checkbox" name = "cashspentCHK" value="Cash Spent">Cash Spent</label>
+                                    </div>
+                                        <div class="checkbox">
+                                        <label><input type="checkbox" name = "discountCHK" value="Discount">Discount</label>
+                                    </div>
+                                        <div class="checkbox">
+                                        <label><input type="checkbox" name = "totalCHK" value="Total">Total</label>
+                                    </div> 
+                                        </div>
+                                        <div class="checkbox">
+                                        <label><input type="checkbox" name = "transactionifCHK" value="Transaction ID">Transaction ID</label>
                                     </div>
 
                                     </div>
                                 </div>
                                 </div>
+                                <!-- Remove up to here if this doesn't work -->
+                            
                             </div>
                             
                             <div class="col-3">
@@ -273,6 +295,7 @@
                               jsonListOfDBdata[a].TransactionID
                           ]]);
             }
+            //SELECT WHICH COLUMNS TO SHOW UP HERE AND PASS INTO WRAPPER BELOW? e.g. 'results' gets custom columns, and wrapper gets the 'results' data table
             result = google.visualization.data.group(data, [2], [{'column': 7, 'aggregation': google.visualization.data.sum, 'type': 'number'}]);
             var table = new google.visualization.Table(document.getElementById('table_div'));
             table.draw(data, {width: '75%', height: '100%', page: 'enabled', allowHTML: 'true', columns: ''});
