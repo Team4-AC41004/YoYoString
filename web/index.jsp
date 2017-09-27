@@ -26,7 +26,24 @@
 
             <%  LoggedIn Loggedin = (LoggedIn) session.getAttribute("loggedin");
                 if (loggedin != null) {%> 
-            <h3>Welcome <%=Loggedin.getUserid()%> !</h3>  
+                <div class="row">
+                    <div class="col">
+                        <a class="indexbtn" id="indbtntopleft" href="#">12</a>
+                    </div>
+                    <div class="col">
+                        a
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        a
+                    </div>
+                    <div class="col">
+                        a
+                    </div>
+                </div>
+                
+                
             <%} else { %><br/>
             <div class="alert alert-info float-center" style="width: 100%;"role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" style='cursor: pointer'>

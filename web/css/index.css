@@ -15,7 +15,7 @@ and open the template in the editor.
 body
 {
     margin: 0 auto;
-   
+
 }
 
 nav
@@ -31,12 +31,13 @@ nav
 .btn
 {
     border-radius: 25px;
+    box-shadow: 0 0 5px black;
 }
 
 .form-control
 {
     border-radius: 25px;
-    
+
 }
 
 .jumbotron
@@ -57,18 +58,48 @@ nav
 }
 .row-table-select
 {
-    
+
 }
 .row-table-hover
 {
-    
+
 }
 .cell-head
 {
-    
+
 }
 .cell-table
 {
-    
+
 }
-                                 
+
+
+nav
+{
+    box-shadow: 0 0 5px black;
+}
+
+.grow img{
+    transition: 0.4s ease-in-out;
+}
+
+.grow img:hover{
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    transition: 0.4s ease-in-out;
+}
+
+.badge
+{
+    transition: 0.4s ease-in-out;
+
+}
+
+.badge:hover
+{
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    transition: 0.4s ease-in-out;
+}
