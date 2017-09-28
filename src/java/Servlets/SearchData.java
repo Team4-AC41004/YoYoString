@@ -251,7 +251,7 @@ public class SearchData extends HttpServlet{
         
         try
         {
-            request.setAttribute("requestedCustomDataAttribute", allDataModelObj.getJSONObjectList("!", "!", "!", myarray) );
+            request.setAttribute("requestedCustomDataAttribute", allDataModelObj.getJSONObjectList("2017-07-13", "2017-08-13", "!", myarray) );
             request.setAttribute("attributeArrayThatShowsCheckboxActiveZeroOrOne", "000000000");
             System.out.println("Try in Get in SearchData.java");
         }

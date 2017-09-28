@@ -182,6 +182,79 @@ public class AllDataModel {
     
     }
     
+    public List getUserJourney(String userid, String startdate, String enddate) throws SQLException{          
+        Connection conn = null;
+        
+        try
+        { 
+            conn = DBConnection.createConnection();
+            ResultSet resultSet = null;
+            Statement statement = conn.createStatement();
+            String delimiters = "[-: .]";
+            List listOfJSONObjectsUser = new LinkedList(); 
+            
+            boolean useDates = false;
+            
+            if (!startdate.equals("!")){
+                useDates = true;
+            }   
+            
+            String query="SELECT * FROM disbursals WHERE UserID ='dusa-" +userid+ "'";
+            
+            if (useDates){
+                query =  query + " AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
+            }
+            
+            System.out.println("query: " + query);
+            resultSet = statement.executeQuery(query);
+            while (resultSet.next())
+            {
+                JSONObject jsonData = new JSONObject();
+                
+                String dateAndTime  = resultSet.getString("DateAndTime");
+                String[] parsedDateTime = dateAndTime.split(delimiters);
+                
+                //Dirty Hack to append date to correct month in google charts, forgive me for my sins. (ﾉಥ益ಥ）ﾉ
+                int fixmonth = Integer.parseInt(parsedDateTime[1]);
+                fixmonth -= 1;
+                parsedDateTime[1] = ""+fixmonth;
+                //////////////////////////////////////////////////////////////////////////////////////////
+                
+                int[] finalDateTime = new int[parsedDateTime.length];
+                for (int i = 0; i < parsedDateTime.length; i++)
+                { finalDateTime[i] = Integer.parseInt(parsedDateTime[i]); }
+                
+                
+                //Columns
+                jsonData.put("DateAndTime"  , finalDateTime);
+                jsonData.put("OutletRef"    , resultSet.getInt("OutletRef"));
+                jsonData.put("OutletName"   , resultSet.getString("OutletName"));
+                jsonData.put("UserID"       , resultSet.getString("UserID"));
+                jsonData.put("TransactionType", resultSet.getString("TransactionType"));
+                jsonData.put("CashSpent"    , resultSet.getFloat("CashSpent"));
+                jsonData.put("Discount"     , resultSet.getFloat("Discount")); 
+                jsonData.put("Total"        , resultSet.getFloat("Total"));
+                jsonData.put("TransactionID", resultSet.getInt("TransactionID"));
+                
+                listOfJSONObjectsUser.add(jsonData);
+                
+            }
+            conn.close();
+            return listOfJSONObjectsUser;
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Error getting User journey.");
+        }finally
+        {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+            }
+        }
+        return null; // DB Conn failed or no data found.
+    
+    }
+    
     //I like this method and I don't want to remove it :D
     //
     //@ param A String filled with locations (e.g. 'Premier Shop,Mono,Air Bar')
