@@ -250,7 +250,8 @@
       
       var chartEditor = null;
       var wrapper = null;
-      var result = null;
+      var resultRAW = null;
+      var resultJSON = null;
       var imageURI = null;
       
 
@@ -315,7 +316,6 @@
             { 
                 console.log("Not null, yay!: var arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne !== null");
                 
-                var columnsToUse = "";
                 var tickedCheckBoxNumber = [];//new Array(2);
                 //SELECT WHICH COLUMNS TO SHOW UP HERE AND PASS INTO WRAPPER BELOW? e.g. 'results' gets custom columns, and wrapper gets the 'results' data table
                 console.log("KEEL YUU!" + arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne);
@@ -342,12 +342,14 @@
                 console.log("FOR LUUUUPPPP OVER");
                 console.log("tickedCheckBoxNumber[0] = " + tickedCheckBoxNumber[0]);
                 console.log("tickedCheckBoxNumber[1] = " + tickedCheckBoxNumber[1]);
+                
                 // What's the intention here?
                 try
                 {
                     // Does it only work with 2 values?
                    // result = google.visualization.data.group(data, [ tickedCheckBoxNumber[0] ] , [ tickedCheckBoxNumber[1] ]);
-                    result = new google.visualization.data.group(data, [tickedCheckBoxNumber[0], tickedCheckBoxNumber[1]]);
+                    resultRAW = new google.visualization.data.group(data, [{column: tickedCheckBoxNumber[0], label : data.getColumnLabel(tickedCheckBoxNumber[0]) }, {column: tickedCheckBoxNumber[1], label : data.getColumnLabel(tickedCheckBoxNumber[1])}]);
+                    resultJSON = resultRAW.toJSON();
                     console.log("Try try try in viewalldata.jsp");
                 }
                 catch(n)
@@ -368,7 +370,7 @@
             // Create the chart to edit.
             wrapper = new google.visualization.ChartWrapper({
             'chartType':'PieChart',
-            'dataTable': result,
+            'dataTable': resultJSON,
              
             'options': {'title':'Stats', 'legend':'none'}
              
