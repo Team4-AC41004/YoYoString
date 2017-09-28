@@ -91,10 +91,10 @@
                                 </div>
                                 <div class="form-group " id="enabledate">
                                     <label for="startdatepicker"> Start Date</label>
-                                    <input type="text" class="form-control" name = "startdatepicker" id="startdatepicker" placeholder="2000/01/01">
+                                    <input type="text" class="form-control" name = "startdatepicker" id="startdatepicker" placeholder="2000/01/01" required>
 
                                     <label for="enddatepicker"> End Date </label> 
-                                    <input type="text" class="form-control" name = "enddatepicker" id="enddatepicker" placeholder="3000/12/31"> 
+                                    <input type="text" class="form-control" name = "enddatepicker" id="enddatepicker" placeholder="3000/12/31" required> 
                                 </div>
                             </div>
                             <div class="col-3">
@@ -182,7 +182,7 @@
                                     </div> 
                                         </div>
                                         <div class="checkbox">
-                                        <label><input type="checkbox" name = "transactionifCHK" value="Transaction ID">Transaction ID</label>
+                                        <label><input type="checkbox" name = "transactionidCHK" value="Transaction ID">Transaction ID</label>
                                     </div>
 
                                     </div>
@@ -255,68 +255,130 @@
       
 
 
-      function drawTable()
-      { 
-          google.charts.setOnLoadCallback(createEditor);
-          var data = new google.visualization.DataTable();
-          // Order of Columns must be remembered below when atting rows.
+        function drawTable()
+        { 
+            google.charts.setOnLoadCallback(createEditor);
+            var data = new google.visualization.DataTable();
+            // Order of Columns must be remembered below when atting rows.
 
-          // Again, you might not need every single column+row.
-          data.addColumn('datetime', 'Date And Time'); //data.addColumn('datatype', 'NameofColumnlalala');
-          data.addColumn('number', 'Outlet Ref');
-          data.addColumn('string', 'Outlet Name');
-          data.addColumn('string', 'User ID');
-          data.addColumn('string', 'Transaction Type');
-          data.addColumn('number', 'Cash spent');
-          data.addColumn('number', 'Discount');
-          data.addColumn('number', 'Total');
-          data.addColumn('number', 'Transaction ID');
-
-
-          // Get the Attribute which holds all data retrieved by Model.
-          var jsonListOfDBdata = <%=request.getAttribute("JSONListAttribute")%>;
-          //console.log("jsonListOfDBdata: " + jsonListOfDBdata + "length: " + jsonListOfDBdata.length);
+            // Again, you might not need every single column+row.
+            data.addColumn('datetime', 'Date And Time'); //data.addColumn('datatype', 'NameofColumnlalala');
+            data.addColumn('number', 'Outlet Ref');
+            data.addColumn('string', 'Outlet Name');
+            data.addColumn('string', 'User ID');
+            data.addColumn('string', 'Transaction Type');
+            data.addColumn('number', 'Cash spent');
+            data.addColumn('number', 'Discount');
+            data.addColumn('number', 'Total');
+            data.addColumn('number', 'Transaction ID');
 
 
-          for (var a = 0; a < jsonListOfDBdata.length; a++)
-          {
-              var dateTime = jsonListOfDBdata[a].DateAndTime;
-              // Order is important. Must match Columns.
-              data.addRows
-                      ([[
-                              new Date(dateTime[0], dateTime[1], dateTime[2], dateTime[3], dateTime[4], dateTime[5], dateTime[6]),
-                              jsonListOfDBdata[a].OutletRef,
-                              jsonListOfDBdata[a].OutletName,
-                              jsonListOfDBdata[a].UserID,
-                              jsonListOfDBdata[a].TransactionType,
-                              jsonListOfDBdata[a].CashSpent,
-                              jsonListOfDBdata[a].Discount,
-                              jsonListOfDBdata[a].Total,
-                              jsonListOfDBdata[a].TransactionID
-                          ]]);
+            // Get the Attribute which holds all data retrieved by Model.
+            var jsonListOfDBdata = <%=request.getAttribute("requestedCustomDataAttribute")%>;
+            //console.log("jsonListOfDBdata: " + jsonListOfDBdata + "length: " + jsonListOfDBdata.length); // Seems to work.
+
+
+            for (var a = 0; a < jsonListOfDBdata.length; a++)
+            {
+                var dateTime = jsonListOfDBdata[a].DateAndTime;
+                // Order is important. Must match Columns.
+                data.addRows
+                            ([[
+                                new Date(dateTime[0], dateTime[1], dateTime[2], dateTime[3], dateTime[4], dateTime[5], dateTime[6]),
+                                jsonListOfDBdata[a].OutletRef,
+                                jsonListOfDBdata[a].OutletName,
+                                jsonListOfDBdata[a].UserID,
+                                jsonListOfDBdata[a].TransactionType,
+                                jsonListOfDBdata[a].CashSpent,
+                                jsonListOfDBdata[a].Discount,
+                                jsonListOfDBdata[a].Total,
+                                jsonListOfDBdata[a].TransactionID
+                            ]]);
             }
             //SELECT WHICH COLUMNS TO SHOW UP HERE AND PASS INTO WRAPPER BELOW? e.g. 'results' gets custom columns, and wrapper gets the 'results' data table
-            result = google.visualization.data.group(data, [2], [{'column': 7, 'aggregation': google.visualization.data.sum, 'type': 'number'}]);
+            
+            
+            // Want an array with 0's and 1's to show in order which Checkbox is active. getParameterValues
+            //var arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne = new Array(9);//[9];
+            var arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne = new String("<%=request.getAttribute("attributeArrayThatShowsCheckboxActiveZeroOrOne")%>");
+            //var arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne = <%//=request.getAttribute("arrayWithSelectedCheckboxesAttribute")%>;
+            //console.log("var arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne in viewalldata.jsp: " + arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne);
+            //console.log("request: " + <%//=request.getAttribute("attributeArrayThatShowsCheckboxActiveZeroOrOne")%>); // nope
+            //console.log("(String)request: " + <%//=(String)request.getAttribute("attributeArrayThatShowsCheckboxActiveZeroOrOne")%>); // nope
+            //var what = new String("<%//=request.getAttribute("attributeArrayThatShowsCheckboxActiveZeroOrOne")%>"); // yisss
+            //console.log( "what: " + what);
+            
+            
+            //arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne = String(arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne);
+            
+            if (arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne !== "0") // User has made choices about filtering.
+            { 
+                console.log("Not null, yay!: var arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne !== null");
+                
+                var columnsToUse = "";
+                var tickedCheckBoxNumber = [];//new Array(2);
+                //SELECT WHICH COLUMNS TO SHOW UP HERE AND PASS INTO WRAPPER BELOW? e.g. 'results' gets custom columns, and wrapper gets the 'results' data table
+                console.log("KEEL YUU!" + arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne);
+                console.log("arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne.length= " + arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne.length);
+                
+                for (var i = 0; i < arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne.length; i++)
+                {
+                    console.log("first for loop");
+                    if(arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne.charAt(i) !== "0") // If box is ticked
+                    {
+                        //if (columnsToUse.charAt(0) === "" ) // What's this mean?
+                        //{
+                        tickedCheckBoxNumber.push(i);
+                        console.log("i" + i);
+                            //columnsToUse += arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne.charAt(i);   //.push(i); // add the ticked box index number
+                        //} // So only ever gonna add 1 ?
+                    }
+                    else // box not ticked
+                    {
+                        
+                        
+                    }
+                }
+                console.log("FOR LUUUUPPPP OVER");
+                console.log("tickedCheckBoxNumber[0] = " + tickedCheckBoxNumber[0]);
+                console.log("tickedCheckBoxNumber[1] = " + tickedCheckBoxNumber[1]);
+                // What's the intention here?
+                try
+                {
+                    // Does it only work with 2 values?
+                   // result = google.visualization.data.group(data, [ tickedCheckBoxNumber[0] ] , [ tickedCheckBoxNumber[1] ]);
+                    result = new google.visualization.data.group(data, [tickedCheckBoxNumber[0], tickedCheckBoxNumber[1]]);
+                    console.log("Try try try in viewalldata.jsp");
+                }
+                catch(n)
+                {
+                    console.log("Catch in viewalldata.jsp: " + n);
+                    //result = google.visualization.data.group(data, [0], [5]); // hardcoded values?
+                }
+            }
+            //console.log("columnsToUse = " + columnsToUse);
+            
             var table = new google.visualization.Table(document.getElementById('table_div'));
             table.draw(data, {width: '75%', height: '100%', page: 'enabled', allowHTML: 'true', columns: ''});
         }
          
 
-        function createEditor() {
-          // Create the chart to edit.
+        function createEditor() 
+        {
+            // Create the chart to edit.
             wrapper = new google.visualization.ChartWrapper({
-             'chartType':'PieChart',
-             'dataTable': result,
+            'chartType':'PieChart',
+            'dataTable': result,
              
-             'options': {'title':'Stats', 'legend':'none'}
+            'options': {'title':'Stats', 'legend':'none'}
              
-          });
+            });
           
 
-          chartEditor = new google.visualization.ChartEditor();
-          google.visualization.events.addListener(chartEditor, 'ok', redrawChart);
+            chartEditor = new google.visualization.ChartEditor();
+            google.visualization.events.addListener(chartEditor, 'ok', redrawChart);
           
-          //imageURI = getChartWrapper().getChart().getImageURI();
+            //imageURI = getChartWrapper().getChart().getImageURI();
                
         }
     
