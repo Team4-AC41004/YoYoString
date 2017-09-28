@@ -19,17 +19,17 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
             $(function () {
-                $.datepickermap.setDefaults({
+                $.datepicker.setDefaults({
                     minDate: new Date(2015, 7, 24),
                     maxDate: "+1d",
                     changeYear: true,
                     altFormat: "yy-mm-dd",
                     dateFormat: "yy-mm-dd"
                 });
-                $("#startdatepickermap").datepickermap({
+                $("#startdatepicker").datepicker({
                     defaultDate: new Date(2015, 7, 24)
                 });
-                $("#enddatepickermap").datepickermap();
+                $("#enddatepicker").datepicker();
             });
         </script>
     
@@ -83,17 +83,17 @@
               
             <div class="form-group">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" id="datecheckmap" checked value="1">
+                    <input class="form-check-input" type="checkbox" id="datecheck" checked value="1">
                         Search By Date
                 </label>
             </div>
               
-            <div class="form-group " id="enabledatemap">
-                <label for="startdatepickermap"> Start Date</label>
-                <input type="text" class="form-control" name = "startdatepickermap" id="startdatepickermap" placeholder="2000/01/01" required>
+            <div class="form-group " id="enabledate">
+                <label for="startdatepicker"> Start Date</label>
+                <input type="text" class="form-control" name = "startdatepicker" id="startdatepicker" placeholder="2000/01/01" required>
 
-                <label for="enddatepickermap"> End Date </label> 
-                <input type="text" class="form-control" name = "enddatepickermap" id="enddatepickermap" placeholder="2085/12/31" required> 
+                <label for="enddatepicker"> End Date </label> 
+                <input type="text" class="form-control" name = "enddatepicker" id="enddatepicker" placeholder="2085/12/31" required> 
             </div>
         <!---------------------------- PART 1 END ------------------------------>
         
@@ -130,12 +130,12 @@
     
     
     <script>
-        document.getElementById('datecheckmap').onchange = function() {
-        document.getElementById('enddatepickermap').disabled = !this.checked;
-        document.getElementById('startdatepickermap').disabled = !this.checked;
-        document.getElementById('enddatepickermap').value = "";
-        document.getElementById('startdatepickermap').value = "";
-        $("#enabledatemap").toggle("fast");
+        document.getElementById('datecheck').onchange = function() {
+        document.getElementById('enddatepicker').disabled = !this.checked;
+        document.getElementById('startdatepicker').disabled = !this.checked;
+        document.getElementById('enddatepicker').value = "";
+        document.getElementById('startdatepicker').value = "";
+        $("#enabledate").toggle("fast");
         };  
     </script>
     
@@ -311,18 +311,20 @@
         for (var i=0; i< userJourneyPoints.length; i++) {
             
             var lat = coords[coordsToUse[i]][0];
-            lat = parseFloat(lat);
+            
             //var otherlat = lat.toFixed(5);
             //parseFloat(lat);
             
             var lng = coords[coordsToUse[i]][1];
-            lng = parseFloat(lng);
+            
             //var otherlng = lng.toFixed(5);
             //parseFloat(lng);
             
             if (lat===0){    
             }
             else{
+                lat = parseFloat(lat);
+                lng = parseFloat(lng);
             var latLng = new google.maps.LatLng(lat, lng);
             pointdata.push(latLng);
                 
