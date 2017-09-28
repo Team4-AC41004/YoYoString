@@ -35,7 +35,7 @@
                                 <a class="nav-link" href="Logout">Logout</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="AllData"> Stats</a>
+                                <a class="nav-link" href="SearchData"> Stats</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="testServlet">EVERYTHING_TABLE</a>
