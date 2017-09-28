@@ -15,8 +15,8 @@
 
 <%
    File file ;
-   int maxFileSize = 5000 * 1024;
-   int maxMemSize = 5000 * 1024;
+   int maxFileSize = 50000 * 1024;
+   int maxMemSize = 50000 * 1024;
    String filePath = "c:/apache-tomcat-8/"; // TODO: change to zeno
 
    String contentType = request.getContentType();
