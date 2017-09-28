@@ -1,11 +1,16 @@
 <%-- 
     Document   : customerinfo
     Created on : 26-Sep-2017, 10:08:44
-    Author     : Think
+    Author     : Chris + Philipp
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.LinkedList"%>
+<%@page import="java.util.List"%>
 <%@page import="Util.DBConnection"%>
-<%@page import="com.mysql.jdbc.log.Log"%>
+<%@page import="Beans.PairBean"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 
@@ -172,13 +177,12 @@
                     <table class="table table-hover" id="stores">
                         <thead class="thead-dark">
                             <tr>
-                                <th>Transaction Date</th>
-                                <th>Store ID</th>
-                                <th>Store Name</th>
-                                <th>Transaction Type</th>
-                                <th>Cash Spent</th>
-                                <th>Discount</th>
-                                <th>Total</th>
+                                <th>First Transaction</th>
+                                <th>Transactions</th>
+                                <th>Average spent per Transaction</th>
+                                <th>Total Cash Spent</th>
+                                <th>Total Discount</th>
+                                <th>Cash + Discount</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -190,38 +194,182 @@
                                 rs = stmt.executeQuery(query7);
                                 int count = 5000;
                                 int inc = 0;
-                                while (rs.next() && inc < count) {
-                            %>
-                            <tr>
-                                <%
-                                    Date date = rs.getDate("DateAndTime");
-                                    int id = rs.getInt("OutletRef");
+                                float totalCashSpent = 0;
+                                int totalAmountOfTransactions = 0;
+                                float totalDiscountGotten = 0;
+                                float totalAmount = 0;
+                                float avgSpent = 0;
+                                boolean gotFirstDate = false;
+                                Date date = null;
+                                List<String> outletsUsed = new LinkedList<String>();
+                                //Map<Integer,String> mapOutletsUsed = new HashMap<Integer,String>();
+                                List<PairBean> outletsUsedBeans = new LinkedList<PairBean>();
+                                List<PairBean> outletsUsedBeansDescOrder = new LinkedList<PairBean>();
+                          %><tr><%    
+                                while (rs.next() && inc < count) 
+                                {
+                                    // Get the first date.
+                                    if (!gotFirstDate){ 
+                                        date = rs.getDate("DateAndTime"); 
+                                        gotFirstDate = true;
+                                    }
+                                    
+                                    //int id = rs.getInt("OutletRef");
+                                    // Add Outletname if not yet added.
                                     String name = rs.getString("OutletName");
-                                    String transtype = rs.getString("TransactionType");
-                                    float cashspent = rs.getFloat("CashSpent");
-                                    float discount = rs.getFloat("Discount");
-                                    float total = rs.getFloat("Total");
+                                    // Loop through List and see if it's already in the List.
+                                 /*   boolean alreadyExists = false; // Assume it's not in list.
+                                    for (int i = 0; i < outletsUsed.size(); i++) // Loop through entire list.
+                                    {
+                                        if (outletsUsed.get(i).equals(name)){ // if the name is found in the List, set true to say we already have it.
+                                            alreadyExists = true; 
+                                            break;
+                                        }
+                                    }
+                                    if (!alreadyExists) { outletsUsed.add(name); } */
+                                    
+                                    // Bean version. outletsUsedBeans
+                                    boolean alreadyExists = false; // Assume it's not in list.
+                                    for (int i = 0; i < outletsUsedBeans.size(); i++) // Loop through entire list.
+                                    {
+                                        if (outletsUsedBeans.get(i).getStoreName().equals(name)){ // if the name is found in the List, set true to say we already have it.
+                                            alreadyExists = true;
+                                            // Increment amount of times user went to this store.
+                                            outletsUsedBeans.get(i).incrementStoreVisits();// setStoreVisits( outletsUsedBeans.get(i).getStoreVisits() + 1 );
+                                            break;
+                                        }
+                                    }
+                                    if (!alreadyExists) { // store not saved in List yet, so add it
+                                        PairBean pairBeanObj = new PairBean();
+                                        pairBeanObj.setStoreName(name);
+                                        pairBeanObj.setStoreVisits(1);
+                                        outletsUsedBeans.add(pairBeanObj);
+                                    }
+                                    
+                                    totalCashSpent      += rs.getFloat("CashSpent");
+                                    totalDiscountGotten += rs.getFloat("Discount");
                                     inc += 1;
+                                    
+                                    totalAmountOfTransactions += 1;
+                                }
+                                totalAmount = totalCashSpent+totalDiscountGotten;
+                                avgSpent = totalCashSpent / totalAmountOfTransactions;
+                                // Format £ amounts to 2 decimal places.
+                            for (int a=0; a < 4; a++)
+                            {   float value = 0;
+                                if(a==0) { value = totalCashSpent; }
+                                if(a==1) { value = totalDiscountGotten; }
+                                if(a==2) { value = totalAmount; }
+                                if(a==3) { value = avgSpent; }
+                                int pow = 100;
+                                float tmp = value * pow;
+                                float tmpSub = tmp - (int) tmp;
+
+                                if(a==0) 
+                                { totalCashSpent = ( (float) ( (int) (
+                                                    value >= 0
+                                                    ? (tmpSub >= 0.5f ? tmp + 1 : tmp)
+                                                    : (tmpSub >= -0.5f ? tmp : tmp - 1)
+                                                    ) ) ) / pow; 
+                                }
+                                if(a==1) { totalDiscountGotten = ( (float) ( (int) (
+                                                    value >= 0
+                                                    ? (tmpSub >= 0.5f ? tmp + 1 : tmp)
+                                                    : (tmpSub >= -0.5f ? tmp : tmp - 1)
+                                                    ) ) ) / pow; }
+                                if(a==2) { totalAmount = ( (float) ( (int) (
+                                                    value >= 0
+                                                    ? (tmpSub >= 0.5f ? tmp + 1 : tmp)
+                                                    : (tmpSub >= -0.5f ? tmp : tmp - 1)
+                                                    ) ) ) / pow; } 
+                                if(a==3) { avgSpent = ( (float) ( (int) (
+                                                    value >= 0
+                                                    ? (tmpSub >= 0.5f ? tmp + 1 : tmp)
+                                                    : (tmpSub >= -0.5f ? tmp : tmp - 1)
+                                                    ) ) ) / pow; } 
+                                
+                            } 
+
+                            // Order the List of Outlets used. outletsUsedBeansDescOrder
+                            
+                            // Loop through all -> take highest, add in new. Again until list empty.
+                            
+                            while (!outletsUsedBeans.isEmpty()) // Loop through all outlets we have saved.
+                            {
+                                //System.out.println("=== New While Loop ===");
+                            
+                                // Loop through all and extract highest.
+                                int highestIndex = -1;
+                                for (int i=0; i < outletsUsedBeans.size(); i++)
+                                {
+                                    // Set first as highest.
+                                    if(highestIndex == -1) {highestIndex = i;}
+                                    // Now check if 2nd/3rd etc is higher and set them as highest if they are
+                                    //System.out.println("outletsUsedBeans.get(" +i+ ").getStoreVisits(): " + outletsUsedBeans.get(i).getStoreVisits()); 
+                                    //System.out.println("outletsUsedBeans.get(" +highestIndex+ ").getStoreVisits():highestIndex " + outletsUsedBeans.get(highestIndex).getStoreVisits()); 
+                                    if(outletsUsedBeans.get(i).getStoreVisits() > outletsUsedBeans.get(highestIndex).getStoreVisits())
+                                    { 
+                                        // is higher
+                                        //System.out.println("new highestIndex = " + i);
+                                        highestIndex = i;
+                                    }
+                                }
+                                // Now we know index of highest storevisits.
+                                // add to 2nd list
+                                outletsUsedBeansDescOrder.add(outletsUsedBeans.get(highestIndex));
+                                // remove it from first list.
+                                outletsUsedBeans.remove(highestIndex);
+                                
+                            //System.out.println("outletsUsedBeans.isEmpty(): "+outletsUsedBeans.isEmpty());
+                            } // end while()
+                            // end order outlet list. outletsUsedBeans
                                 %>
+                                
+                            <!-- Populate Table -->
                                 <td scope="row"><%=date%></td>
-                                <td><%=id%></td>
-                                <td class="storeid"><%=name%></td>
-                                <td><%=transtype%></td>
-                                <td><%=cashspent%></td>
-                                <td><%=discount%></td>
-                                <td><%=total%></td>
+                                <td><%=totalAmountOfTransactions%></td>
+                                <td><%=avgSpent%>£</td>
+                                <td><%=totalCashSpent%>£</td>
+                                <td><%=totalDiscountGotten%>£</td>
+                                <td><%=totalAmount%>£</td>
                             </tr>
+                            <%  
+                            conn.close();%>
+                            
+                        </tbody>
+                    </table>
+                    <table class="table table-hover" id="storesdata">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Store Used</th>
+                                <th>How often</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        
+                            <% 
+                                for (int i=0; i < outletsUsedBeansDescOrder.size(); i++) 
+                                {
+                                 %> <tr> <%
+                                     %><td class="storeid"> <%=outletsUsedBeansDescOrder.get(i).getStoreName()%></td>
+                                    
+                                      <td><%=outletsUsedBeansDescOrder.get(i).getStoreVisits()%></td> <%
+                                 %> </tr> <%
+                            %>
+
+                                    
+                                        
+                                    
+                              <%}%>
+                                
+
+
                             <script>
                                 $(".storeid").each(function () {
                                     var innertext = $(this).text();
                                     $(this).wrapInner("<a href=\"" + "StoreData?id=" + encodeURI(innertext) + "\"></a>");
                                 });
                             </script>
-                            <%}
-
-                            
-                            conn.close();%>
-                            
                         </tbody>
                     </table>
                     <script>
@@ -238,8 +386,9 @@
                         //code from https://stackoverflow.com/questions/23035858/export-html-table-to-pdf-using-jspdf#23056299
                         function genPDF() {
                             var doc = new jsPDF('p', 'pt');
-                            var elem = document.getElementById("stores");
-                            var res = doc.autoTableHtmlToJson(elem);
+                            var elem = document.getElementById("storesdata");
+                            var elem2 = document.getElementById("stores");
+                            var res = doc.autoTableHtmlToJson(elem, elem2);
                             doc.autoTable(res.columns, res.data);
                             doc.save("table.pdf");
                         }
