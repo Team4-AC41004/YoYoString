@@ -93,6 +93,7 @@
                                     <label for="startdatepicker"> Start Date</label>
                                     <input type="text" class="form-control" name = "startdatepicker" id="startdatepicker" placeholder="2000/01/01" required>
 
+                                    
                                     <label for="enddatepicker"> End Date </label> 
                                     <input type="text" class="form-control" name = "enddatepicker" id="enddatepicker" placeholder="3000/12/31" required> 
                                 </div>
@@ -160,16 +161,10 @@
                                         <label><input type="checkbox" name = "dateandtimeCHK" value = "Date and Time">Date and Time</label>
                                     </div>
                                         <div class="checkbox">
-                                        <label><input type="checkbox" name = "outletreferenceCHK" value = "Outlet Reference">Outlet Reference</label>
-                                    </div>
-                                        <div class="checkbox">
                                         <label><input type="checkbox" name = "outletnameCHK" value = "Outlet Name">Outlet Name</label>
                                     </div>
                                         <div class="checkbox">
                                         <label><input type="checkbox" name = "useridCHK" value="User ID">User ID</label>
-                                    </div>
-                                        <div class="checkbox">
-                                        <label><input type="checkbox" name = "transactiontypeCHK" value="Transaction Type">Transaction Type</label>
                                     </div>
                                         <div class="checkbox">
                                         <label><input type="checkbox" name = "cashspentCHK" value="Cash Spent">Cash Spent</label>
@@ -181,9 +176,6 @@
                                         <label><input type="checkbox" name = "totalCHK" value="Total">Total</label>
                                     </div> 
                                         </div>
-                                        <div class="checkbox">
-                                        <label><input type="checkbox" name = "transactionidCHK" value="Transaction ID">Transaction ID</label>
-                                    </div>
 
                                     </div>
                                 </div>
@@ -203,7 +195,7 @@
                 <br>
                 <div id="chart_div"></div>
                 <br>
-                <button class="btn btn-info" onclick="loadEditor()">Edit Chart</button>
+                <button class="btn btn-info" onclick="loadEditor()">View and Edit Chart</button>
                 <br><br>
                 
                 <button class="btn btn-primary" onclick="downloadPDF()">Download Graph in PDF</button>
@@ -239,7 +231,14 @@
                 $("#enablelocation").toggle("fast");
                 };
         </script>
-
+        
+       <!-- <script>
+            $('input[type=checkbox]').on('change', function(e){
+                if($('input[type=checkbox]:checked').length>2){
+                    $(this).prop('checked', false);
+                }
+            });
+        </script>-->
 
         <!-- Load the google chart loader. -->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -253,13 +252,15 @@
       var resultRAW = null;
       var resultJSON = null;
       var imageURI = null;
-      
+      var data = null;
+      var tickedCheckBoxNumber = [];
 
 
         function drawTable()
         { 
             google.charts.setOnLoadCallback(createEditor);
-            var data = new google.visualization.DataTable();
+
+            data = new google.visualization.DataTable();
             // Order of Columns must be remembered below when atting rows.
 
             // Again, you might not need every single column+row.
@@ -270,7 +271,7 @@
             data.addColumn('string', 'Transaction Type');
             data.addColumn('number', 'Cash spent');
             data.addColumn('number', 'Discount');
-            data.addColumn('number', 'Total');
+            data.addColumn('number', 'Total Transaction value');
             data.addColumn('number', 'Transaction ID');
 
 
@@ -316,7 +317,6 @@
             { 
                 console.log("Not null, yay!: var arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne !== null");
                 
-                var tickedCheckBoxNumber = [];//new Array(2);
                 //SELECT WHICH COLUMNS TO SHOW UP HERE AND PASS INTO WRAPPER BELOW? e.g. 'results' gets custom columns, and wrapper gets the 'results' data table
                 console.log("KEEL YUU!" + arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne);
                 console.log("arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne.length= " + arrayAttributeArrayThatShowsCheckboxActiveZeroOrOne.length);
@@ -338,6 +338,11 @@
                         
                         
                     }
+                }
+                if (tickedCheckBoxNumber.length === 0)
+                {
+                        tickedCheckBoxNumber.push(0);
+                        tickedCheckBoxNumber.push(7);
                 }
                 console.log("FOR LUUUUPPPP OVER");
                 console.log("tickedCheckBoxNumber[0] = " + tickedCheckBoxNumber[0]);
@@ -369,15 +374,16 @@
         {
             // Create the chart to edit.
             wrapper = new google.visualization.ChartWrapper({
-            'chartType':'PieChart',
-            'dataTable': resultJSON,
+            chartType:'ColumnChart',
+            dataTable: resultJSON,
              
-            'options': {'title':'Stats', 'legend':'none'}
+            options: {title:'Provided YoYo data', legend: 'bottom', vAxis : {title : data.getColumnLabel(tickedCheckBoxNumber[1])}, hAxis : {title : data.getColumnLabel(tickedCheckBoxNumber[0])}} 
              
             });
           
 
             chartEditor = new google.visualization.ChartEditor();
+            wrapper.draw(document.getElementById('chart_div'));
             google.visualization.events.addListener(chartEditor, 'ok', redrawChart);
           
             //imageURI = getChartWrapper().getChart().getImageURI();
@@ -397,7 +403,6 @@
         
         function loadEditor(){
             chartEditor.openDialog(wrapper, {});
-            
         }
         
         
@@ -444,7 +449,8 @@
             //doc.output('dataurlnewwindow');   //opens in new window - opens but doesn't work
             //doc.autoPrint();                  //doesn't work
             doc.save("mygraph");
-            };        
+            };     
+            
         }
        
         </script>
