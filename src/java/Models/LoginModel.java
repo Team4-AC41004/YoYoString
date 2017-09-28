@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Models;
 
-//import 
 import Util.DBConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -38,9 +32,7 @@ public class LoginModel {
         {
             con = DBConnection.createConnection();
             statement = con.createStatement();
-            //resultSet = statement.executeQuery("SELECT Userid, Password FROM users"); 
             resultSet = statement.executeQuery ("SELECT * FROM users WHERE Userid =" +userid);
-            //resultSet = statement.executeQuery("SELECT * FROM users");
             
             while (resultSet.next())
             {
@@ -72,5 +64,4 @@ public class LoginModel {
             return null; // Userid/Password not found/wrong.
         }       
     }
-    
 }

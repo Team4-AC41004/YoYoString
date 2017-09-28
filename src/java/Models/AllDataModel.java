@@ -1,26 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Models;
 
-//import 
 import Util.DBConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 import org.json.JSONObject;
 
 /**
  *
- * @author Admin
+ * @author Group
  */
 public class AllDataModel {
     
@@ -37,11 +28,8 @@ public class AllDataModel {
             conn = DBConnection.createConnection();
             ResultSet resultSet = null;
             Statement statement = conn.createStatement();
-            
             String delimiters = "[-: .]";
-            
             List listOfJSONObjects = new LinkedList(); 
-            JSONObject jsonObj = new JSONObject();
             
             
             boolean useDates = false;
@@ -64,7 +52,7 @@ public class AllDataModel {
             
             
             
-            String query="SELECT * FROM disbursals WHERE ";
+            String query = "SELECT * FROM disbursals WHERE ";
             
             //"!" indicates null, since this method cannot be accessed with null values
             if (!startdate.equals("!")){
@@ -78,66 +66,55 @@ public class AllDataModel {
             }   
             
             if (useDates && useUserid && useLocation){
-                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
-                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND OutletName ='" + location[0];
                 query = query + "UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
 
-                for (int i=1; i<location.length; i++){
-                 query = query + " OR OutletName ='" +location[i]+ "'";
+                for (int i=1; i < location.length; i++){
+                    query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }
             else if (useDates && useUserid && useLocation==false){
-                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
                 query =  query + "UserID='dusa-" +userid+ "' AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
 
             }
             else if (useDates && useUserid==false && useLocation==false){
-                //query = "SELECT * FROM disbursals WHERE DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
                 query =  query + "DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
-
             }
             else if (useDates==false && useUserid && useLocation){
-                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "' AND (OutletName ='" +location[0]+ "'";
                 query =  query + "UserID='dusa-" +userid+ "' AND (OutletName ='" +location[0]+ "'";
 
-                for (int i=1; i<location.length; i++){
-                 query = query + " OR OutletName ='" +location[i]+ "'";
+                for (int i=1; i < location.length; i++){
+                    query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }
             else if (useDates==false && useUserid==false && useLocation){
-                //query = "SELECT * FROM disbursals WHERE (OutletName ='" +location[0]+ "'";
                 query =  query + "(OutletName ='" +location[0]+ "'";
 
                 for (int i=1; i<location.length; i++){
-                 query = query + " OR OutletName ='" +location[i]+ "'";
+                    query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }  
             else if (useDates==false && useUserid && useLocation==false){
-                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "'";
                 query =  query + "UserID='dusa-" +userid+ "'";
 
             }
             else if (useDates==false && useUserid==false && useLocation==false){
-                //query = "SELECT * FROM disbursals WHERE UserID='dusa-" +userid+ "'";
                 query =  "SELECT * FROM disbursals";
 
             }
             else if (useDates && useUserid==false && useLocation){
-                //query = "SELECT * FROM disbursals WHERE DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
                 query =  query + "DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "' AND (OutletName ='" + location[0]+ "'";
 
                 for (int i=1; i<location.length; i++){
-                 query = query + " OR OutletName ='" +location[i]+ "'";
+                    query = query + " OR OutletName ='" +location[i]+ "'";
                 }
                 query = query +")"; 
             }
             
             System.out.println("query: " + query);
             resultSet = statement.executeQuery(query);
-            
             while (resultSet.next())
             {
                 JSONObject jsonData = new JSONObject();
@@ -149,8 +126,6 @@ public class AllDataModel {
                 int fixmonth = Integer.parseInt(parsedDateTime[1]);
                 fixmonth -= 1;
                 parsedDateTime[1] = ""+fixmonth;
-                //////////////////////////////////////////////////////////////////////////////////////////
-                
                 int[] finalDateTime = new int[parsedDateTime.length];
                 for (int i = 0; i < parsedDateTime.length; i++)
                 { finalDateTime[i] = Integer.parseInt(parsedDateTime[i]); }
@@ -179,7 +154,6 @@ public class AllDataModel {
             }
         }
         return null; // DB Conn failed or no data found.
-    
     }
     
     public List getUserJourney(String userid, String startdate, String enddate) throws SQLException{          
@@ -199,7 +173,7 @@ public class AllDataModel {
                 useDates = true;
             }   
             
-            String query="SELECT * FROM disbursals WHERE UserID ='dusa-" +userid+ "'";
+            String query = "SELECT * FROM disbursals WHERE UserID ='dusa-" +userid+ "'";
             
             if (useDates){
                 query =  query + " AND DateAndTime BETWEEN '" +startdate+ "' AND '" +enddate+ "'";
@@ -218,12 +192,9 @@ public class AllDataModel {
                 int fixmonth = Integer.parseInt(parsedDateTime[1]);
                 fixmonth -= 1;
                 parsedDateTime[1] = ""+fixmonth;
-                //////////////////////////////////////////////////////////////////////////////////////////
-                
                 int[] finalDateTime = new int[parsedDateTime.length];
                 for (int i = 0; i < parsedDateTime.length; i++)
                 { finalDateTime[i] = Integer.parseInt(parsedDateTime[i]); }
-                
                 
                 //Columns
                 jsonData.put("DateAndTime"  , finalDateTime);
@@ -237,11 +208,9 @@ public class AllDataModel {
                 jsonData.put("TransactionID", resultSet.getInt("TransactionID"));
                 
                 listOfJSONObjectsUser.add(jsonData);
-                
             }
-            conn.close();
-            return listOfJSONObjectsUser;
             
+            return listOfJSONObjectsUser;
         }catch(SQLException e){
             e.printStackTrace();
             System.out.println("Error getting User journey.");
@@ -254,7 +223,7 @@ public class AllDataModel {
         return null; // DB Conn failed or no data found.
     
     }
-    
+} 
     //I like this method and I don't want to remove it :D
     //
     //@ param A String filled with locations (e.g. 'Premier Shop,Mono,Air Bar')
@@ -291,6 +260,4 @@ public class AllDataModel {
         
         return finalArray;
     }
-*/    
-    
-}
+*/
