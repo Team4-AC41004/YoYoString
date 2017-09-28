@@ -158,22 +158,22 @@
                                     <div class="container">
 
                                         <div class="checkbox">
-                                        <label><input type="checkbox" name = "dateandtimeCHK" value = "Date and Time">Date and Time</label>
+                                        <label><input type="checkbox" name = "dateandtimeCHK" value = "Date and Time" id="data">Date and Time</label>
                                     </div>
                                         <div class="checkbox">
-                                        <label><input type="checkbox" name = "outletnameCHK" value = "Outlet Name">Outlet Name</label>
+                                        <label><input type="checkbox" name = "outletnameCHK" value = "Outlet Name" id="data">Outlet Name</label>
                                     </div>
                                         <div class="checkbox">
-                                        <label><input type="checkbox" name = "useridCHK" value="User ID">User ID</label>
+                                        <label><input type="checkbox" name = "useridCHK" value="User ID" id="data">User ID</label>
                                     </div>
                                         <div class="checkbox">
-                                        <label><input type="checkbox" name = "cashspentCHK" value="Cash Spent">Cash Spent</label>
+                                        <label><input type="checkbox" name = "cashspentCHK" value="Cash Spent" id="data">Cash Spent</label>
                                     </div>
                                         <div class="checkbox">
-                                        <label><input type="checkbox" name = "discountCHK" value="Discount">Discount</label>
+                                        <label><input type="checkbox" name = "discountCHK" value="Discount" id="data">Discount</label>
                                     </div>
                                         <div class="checkbox">
-                                        <label><input type="checkbox" name = "totalCHK" value="Total">Total</label>
+                                        <label><input type="checkbox" name = "totalCHK" value="Total" id="data">Total</label>
                                     </div> 
                                         </div>
 
@@ -232,13 +232,15 @@
                 };
         </script>
         
-       <!-- <script>
-            $('input[type=checkbox]').on('change', function(e){
-                if($('input[type=checkbox]:checked').length>2){
+       <script>
+            $('input[id=data]').on('change', function(e){
+                console.log("Step1");
+                if($('input[id=data]:checked').length>2){
+                    console.log("Step2");
                     $(this).prop('checked', false);
                 }
             });
-        </script>-->
+        </script>
 
         <!-- Load the google chart loader. -->
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
