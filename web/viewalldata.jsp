@@ -64,7 +64,7 @@
                 <div class="row">
                     <div class="col">
                         <h1 class="display-3">
-                            Viewing all Records, 2015-2016.
+                            Viewing all Records
                         </h1>
                     </div>
                 </div>

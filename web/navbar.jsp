@@ -37,16 +37,14 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="SearchData"> Stats</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="testServlet">EVERYTHING_TABLE</a>
-                                <!-- 
-                                <form method="Post" action="testServlet" style="margin-bottom: 0em;">
-                                    <input type="submit" name="type" value="To Philipp's Test Page" id="submit">
-                                </form> --> <!-- This will trigger the doPost Method in the Servlet that has name testServlet. -->
-                            </li>
+                            <% // Check if user is admin
+                                int adminstatus = loggedin.getIsAdmin();
+                                if (adminstatus == 1){
+                                %>
                             <li class="nav-item">
                                     <a class="nav-link" href="AdminOptions"> Admin Options</a>
                             </li>
+                            <%}%>
                             <li class="nav-item">
                                     <a class="nav-link" href="tribes.jsp"> View Tribes</a>
                             </li>
