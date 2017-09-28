@@ -2,6 +2,9 @@
     Document   : fileUploadHandlerJSP.jsp
     Created on : 28-Sep-2017, 12:21:02
     Author     : Philipp
+    Jars required: (located in lib folder)
+    commons-fileupload-1.3.3.jar
+    commons-io-2.5.jar
 --%>
 
 <%@ page import = "java.io.*" %>

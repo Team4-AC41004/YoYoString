@@ -29,15 +29,13 @@
                 // Order of Columns must be remembered below when atting rows.
                 // Again, you might not need every single column+row.
                 data.addColumn('string', 'User ID');
+                
                 // Get the Attribute which holds all data retrieved by Model.
                 var jsonListOfDBdata = <%=request.getAttribute("JSONListAttribute")%>;
-                //console.log("jsonListOfDBdata: " + jsonListOfDBdata + "length: " + jsonListOfDBdata.length);
                 for (var a = 0; a < jsonListOfDBdata.length; a++)
                 {
-                    var dateTime = jsonListOfDBdata[a].DateAndTime;
                     // Order is important. Must match Columns.
-                    data.addRows
-                            ([[
+                    data.addRows([[
                                     jsonListOfDBdata[a].UserID,
                                 ]]);
                 }
@@ -53,7 +51,6 @@
                 var table = new google.visualization.Table(document.getElementById('table_div'));
                 table.draw(data, {width: '100%', height: '100%', allowHTML: 'true', columns: '', cssClassNames: 'css1', alternatingRowStyle: 'true'});
 
-
                 $(".google-visualization-table-td").each(function () {
                     var innertext = $(this).text();
                     $(this).wrapInner("<a href=\"CustomerInfo?id=" + innertext + "\"></a>");
@@ -61,7 +58,6 @@
                 var NumofTribe = $('.google-visualization-table-td').length;
                 console.log(NumofTribe);
                 $('#numoftribe').text(NumofTribe);
-
 
                 google.charts.setOnLoadCallback(drawChart);
                 function drawChart() {
@@ -82,12 +78,7 @@
                   var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
                   chart.draw(perc, options);
                 }
-
             }
-
-
-
-
         </script>
         <link rel="stylesheet" href="css/index.css"/>
 

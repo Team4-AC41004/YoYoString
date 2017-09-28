@@ -41,7 +41,11 @@
                             <p> Late Nights; Hard Work, and Caffeine - The Driving forces for this user are a quiet
                                 shopping experience free from the stresses of day-to-day rigamarole. Making the most
                                 of the peace and quiet provided at the Library, they are happy to go a bit further to
-                                ensure they're not bothered.</p><hr class="my-2"/>
+                                ensure they're not bothered.
+                        
+                        <br>Facts:
+                        <br>- Many transactions after 21:00
+                            </p><hr class="my-2"/>
                           
                             &nbsp;<a class="btn btn-info" href="NightOwls" class="btn btn-info">View Night Owls</a>
                             
@@ -53,15 +57,20 @@
                             <p> First to wake, first to bed - That's the motto of the Early Risers up and about
                                 before the rest of us have woken up for the day. Whether it's compiling data, 
                                 taking photos or making breakfast, the Daybreaker makes sure to get the most 
-                                of the magic hours where humanity sleeps, but the world moves.</p><hr class="my-2"/>
+                                of the magic hours where humanity sleeps, but the world moves.
+                            <br>Facts:
+                                - Many transactions before 9am
+                            </p><hr class="my-2"/>
                             &nbsp;<a class="btn btn-info" href="DayBreakers">View Daybreakers</a>
                         </div>
                         <div class="tab-pane fade" id="3" role="tabpanel" aria-labelledby="list-messages-list">
                             <img class="rounded float-right" src="img/bookworm.png" style="width: 200px; height:200px;"/>
                             <h2> The Bookworm </h2><br/>
                             <p> The Library's the place to be - a bookworm knows this and when you've got your head in a book you 
-                                need a warm drink to keep you going! A large number of this users transactions have taken place in
-                                the library.</p><hr class='my-2'/>
+                                need a warm drink to keep you going! 
+                            <br>Facts:
+                            <br>- Many transactions in the Library.
+                            </p><hr class='my-2'/>
                             &nbsp;<a class="btn btn-info" href="bookworms">View BookWorms</a>
                         </div>
                         <div class="tab-pane fade" id="4" role="tabpanel" aria-labelledby="list-settings-list">
@@ -69,7 +78,10 @@
                             <h2> The Medical Marvel </h2><br/>
                             <p> The Doctors and Dentists of the future - working hard to ensure the rest of us don't die too easily!
                                 The consistent workload of these students calls for nearby amenities at their specific buildings, and 
-                                they're sure to get them, thanks to you! </p><hr class='my-2'/>
+                                they're sure to get them, thanks to you! 
+                            <br>Facts:
+                            <br>- Many transactions in the Dental Café
+                            </p><hr class='my-2'/>
                             &nbsp;<a class="btn btn-info" href="MedicalMarvels">View Medical Marvels</a>
                         </div>
                         <div class="tab-pane fade" id="5" role="tabpanel" aria-labelledby="list-home-list">
@@ -77,7 +89,10 @@
                             <h2> The Party Animal </h2><br/>
                             <p> Student Life isn't all studying - it also involves unwinding now and again, and these students make use
                                 of all the time available, and live by the age-old adage: "Sleep more than you Study, Study more than 
-                                you Party, and Party as much as you can.".</p><hr class="my-2"/>
+                                you Party, and Party as much as you can.".
+                                <br>Facts:
+                                <br>- Many transactions in Bars and Clubs (Liar, Air, Mono, Floor Five)
+                            </p><hr class="my-2"/>
                             &nbsp;<a class="btn btn-info" href="PartyAnimals">View Party Animals</a>
                         </div>
                         <div class="tab-pane fade" id="6" role="tabpanel" aria-labelledby="list-profile-list">
@@ -85,7 +100,10 @@
                             <h2> The Premier Patriot </h2><br/>
                             <p> Why go home, when there's supplies to live in the labs for the whole year? The premier patriot never wants to 
                                 have to deal with the frustration of <i>walking home</i> to get food; Grab a Sandwich and Drink, and get back
-                                to work!</p><hr class='my-2'/>
+                                to work!
+                                <br>Facts:
+                                <br>- Many transactions in Premier
+                            </p><hr class='my-2'/>
                             &nbsp;<a class='btn btn-info' href='PremierPatriots'>View Premier Patriots</a>
                         </div>
                        

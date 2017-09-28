@@ -36,10 +36,11 @@
                 //console.log( "fuck: " + fuck[1].238 ); // Using Number only breaks it. eg fuck[1].238
                 
                 // Column Chart. 
-                // 238=Library[1]. 239=Dental Café[15] AND Spare[2]. 236 Air Bar[3]. 243 Ents[4] AND Level 2, Reception[12]. 343 Remote Campus Shop[5]. 
+                // 238=Library[1]. 239=Dental Café[15] AND Spare[2]. 236 Air Bar[3]. 243 Ents[4] AND Level 2, Reception[12]. 343 Remote Campus Shop[5] AND Premier Shop - Yoyo Accept[14].
                 // 241 Liar Bar[6]. 242 Mono[7]. 240 Food on Four[8]. 237 Floor Five[9]. 
-                // 235 DOJ Catering[10] AND DJCAD Cantina[11]. 456 DUSA The Union - Marketplace[13] AND Online Dundee University Students Association[16] AND DUSA The Union Online[17]. 
-                // 343 Premier Shop - Yoyo Accept[14]. 2676 Premier Shop[18]. 2677 College Shop[19]. 2679 Ninewells Shop[20].
+                // 235 DOJ Catering[10] AND DJCAD Cantina[11]. 
+                // 456 DUSA The Union - Marketplace[13] AND Online Dundee University Students Association[16] AND DUSA The Union Online[17]. 
+                //  2676 Premier Shop[18]. 2677 College Shop[19]. 2679 Ninewells Shop[20].
                 
                 // Prep the double data shits. // There's only 15 in the list, because there's 15 ID's. Hence you have to combine the names together. TODO
                 var dentalCafeAndSpare = fuck[2].a239;// + (fuck[15].a239); 
