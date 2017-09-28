@@ -28,37 +28,10 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "NightOwlServlet", urlPatterns = {"/NightOwls"})
 public class NightOwlServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NightOwlServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NightOwlServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException 
     {
-        System.out.println("doGet in NightOwlServlet.java.");
-        
         NightOwlModel NightOwlModelObj = new NightOwlModel();
         try 
         {
@@ -67,7 +40,6 @@ public class NightOwlServlet extends HttpServlet {
         } 
         catch (SQLException ex) { Logger.getLogger(NightOwlServlet.class.getName()).log(Level.SEVERE, null, ex); }
         
-        System.out.println("after try in doPost in NightOwlServlet.java");
         RequestDispatcher rd = request.getRequestDispatcher("/nightowls.jsp");
         rd.forward(request, response);
     }
@@ -83,35 +55,10 @@ public class NightOwlServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        System.out.println("doPost in NightOwlServlet.java.");
-        // None of this is done.
-        HttpSession session = request.getSession();
-        LoggedIn loggedin = (LoggedIn) session.getAttribute("loggedin");
-        NightOwlModel NightOwlModelObj = new NightOwlModel();
         
-
-        //if (request.getParameter("type").equals("To Philipp's Test Page")) // This is weird. "type"?? why not "value" ?
-        //{
-            //request.setAttribute("type", "pos");
-            try 
-            { 
-                System.out.println("try in doPost in NightOwlServlet.java");
-                //request. ?
-                //session.setAttribute("NightOwlAttribute", NightOwlModelObj.getBeanList() );
-                
-                // JSONObject
-                request.setAttribute("JSONListAttribute", NightOwlModelObj.getJSONObjectList() ); 
-            } catch (SQLException ex) {
-                Logger.getLogger(NightOwlServlet.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.println("catch in doPost in NightOwlServlet.java");
-            }
-            System.out.println("after try in doPost in NightOwlServlet.java");
+        // Post not used
             RequestDispatcher rd = request.getRequestDispatcher("/tribes.jsp");
-            rd.forward(request, response);
-            
-        //}
-        
+            rd.forward(request, response);  
     }
 
     /**
@@ -121,7 +68,7 @@ public class NightOwlServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "I like Servlets. - Sufea2k17";
+        return "This Servlet retrieves the data about the tribe of 'Nightowls'.";
     }// </editor-fold>
 
 }

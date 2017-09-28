@@ -25,22 +25,29 @@
         <div class="container-fluid">
 
             <%  LoggedIn Loggedin = (LoggedIn) session.getAttribute("loggedin");
+                LoggedIn IsAdmin = (LoggedIn) session.getAttribute("isAdmin");
                 if (loggedin != null) {%> 
+                <br/>
                 <div class="row">
                     <div class="col">
-                        <a class="indexbtn" id="indbtntopleft" href="#">12</a>
+                        <a class="indexbtn btn btn-info btn-lg fluid" id="indbtntopleft" href="tribes.jsp">View Tribes</a>
                     </div>
                     <div class="col">
-                        a
+                        <a class="indexbtn btn btn-info btn-lg fluid" id="indbtntopright" href="AllData">Search for Stats</a>
                     </div>
                 </div>
+                <br/>
                 <div class="row">
                     <div class="col">
-                        a
+                        <a class="indexbtn btn btn-info btn-lg fluid" id="indbtnbottomleft" href="#">Search for a Customer</a>
                     </div>
+                    <%if(IsAdmin == null){%>
                     <div class="col">
-                        a
-                    </div>
+                        <a class="indexbtn btn btn-info btn-lg fluid" id="indbtnbottomright" href="#">Manage Users</a>
+                    </div><%}else{%>
+                    <div class="col">
+                        <a class="indexbtn btn btn-info btn-lg fluid" id="indbtntopleft" href="#">Logout</a>
+                    </div><%}%>
                 </div>
                 
                 
