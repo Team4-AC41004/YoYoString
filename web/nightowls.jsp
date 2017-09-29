@@ -191,6 +191,32 @@
                     List<PairBean> outletsUsedBeans = new LinkedList<PairBean>();
                     List<PairBean> outletsUsedBeansDescOrder = new LinkedList<PairBean>();
                     
+                    String[] tribeArray = {"bookworms", "daybreakers", "medicalmarvels", "partyanimals", "premierpatriots"};
+                    int NOsAlsoBookworms = 0;
+                    int NOsAlsoDaybreakers = 0;
+                    int NOsAlsoMedicalmarvels = 0;
+                    int NOsAlsoParty = 0;
+                    int NOsAlsoPrem = 0;
+                 for(int xXx=0; xXx < tribeArray.length; xXx++)
+                 {    
+                    for (int gg=0; gg < listOfUserIDs.size(); gg++)
+                    {
+                        // Loop through entire UserID's and check them in every Tribe table, if found -> +1
+                        stmt = null;
+                        stmt = conn.createStatement();
+                        String query77 = "SELECT UserID FROM "+tribeArray[xXx]+" WHERE UserID='" + listOfUserIDs.get(gg) + "' LIMIT 0, 1500;";
+                        ResultSet rs = stmt.executeQuery(query77);
+                        while (rs.next()) 
+                        {
+                            //String userID = rs.getString("UserID");
+                            if(xXx==0) NOsAlsoBookworms += 1;
+                            if(xXx==1) NOsAlsoDaybreakers += 1;
+                            if(xXx==2) NOsAlsoMedicalmarvels += 1;
+                            if(xXx==3) NOsAlsoParty += 1;
+                            if(xXx==4) NOsAlsoPrem += 1;
+                        }
+                    }
+                 }   
                     for (int ii=0; ii < listOfUserIDs.size(); ii++)
                     { //System.out.println("ii: " + ii);
                     
@@ -341,11 +367,13 @@
                                         
                                     }
                               %>
-
-
-                            
-                        
-
+                              <a>Nightowls who are also Bookworms: <%=NOsAlsoBookworms%></a><br>
+                              <a>Nightowls who are also Daybreakers: <%=NOsAlsoDaybreakers%></a><br>
+                              <a>Nightowls who are also Medical Marvels: <%=NOsAlsoMedicalmarvels%></a><br>
+                              <a>Nightowls who are also Party Animals: <%=NOsAlsoParty%></a><br>
+                              <a>Nightowls who are also Premier Patriots: <%=NOsAlsoPrem%></a><br>
+                              
+                              
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.2/vivus.min.js" integrity="sha256-QkfKcx3kugootBtJEPpTKDsWEneddME3kXPoT5o3Yic=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
