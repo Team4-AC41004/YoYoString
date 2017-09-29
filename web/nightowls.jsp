@@ -188,7 +188,8 @@
                     int amountOfUsers = listOfUserIDs.size();
                     System.out.println("listOfUserIDs.size(): " + listOfUserIDs.size());
                     
-                    
+                    List<PairBean> outletsUsedBeans = new LinkedList<PairBean>();
+                    List<PairBean> outletsUsedBeansDescOrder = new LinkedList<PairBean>();
                     
                     for (int ii=0; ii < listOfUserIDs.size(); ii++)
                     { //System.out.println("ii: " + ii);
@@ -203,16 +204,12 @@
                                 float totalCashSpent = 0;
                                 int totalAmountOfTransactions = 0;
                                 float totalDiscountGotten = 0;
-                                float totalAmount = 0;
-                                float avgSpent = 0;
                            
-                                List<PairBean> outletsUsedBeans = new LinkedList<PairBean>();
-                                List<PairBean> outletsUsedBeansDescOrder = new LinkedList<PairBean>();
-                              
                                 while (rs.next()) 
                                 {
                                     // Add Outletname if not yet added.
                                     String name = rs.getString("OutletName");
+                                    
                                     
                                     // Bean version. outletsUsedBeans
                                     boolean alreadyExists = false; // Assume it's not in list.
@@ -226,6 +223,8 @@
                                         }
                                     }
                                     if (!alreadyExists) { // store not saved in List yet, so add it
+                                        
+                                        //System.out.println("NAME" + name);
                                         PairBean pairBeanObj = new PairBean();
                                         pairBeanObj.setStoreName(name);
                                         pairBeanObj.setStoreVisits(1);
@@ -237,44 +236,12 @@
                                     
                                     totalAmountOfTransactions += 1;
                                 }
-                                totalAmount = totalCashSpent+totalDiscountGotten;
+                                //totalAmount = totalCashSpent+totalDiscountGotten;
                                 //avgSpent = totalCashSpent / totalAmountOfTransactions;
                                 
                              
 
-                            // Order the List of Outlets used. outletsUsedBeansDescOrder
                             
-                            // Loop through all -> take highest, add in new. Again until list empty.
-                            
-                            while (!outletsUsedBeans.isEmpty()) // Loop through all outlets we have saved.
-                            {
-                                //System.out.println("=== New While Loop ===");
-                            
-                                // Loop through all and extract highest.
-                                int highestIndex = -1;
-                                for (int i=0; i < outletsUsedBeans.size(); i++)
-                                {
-                                    // Set first as highest.
-                                    if(highestIndex == -1) {highestIndex = i;}
-                                    // Now check if 2nd/3rd etc is higher and set them as highest if they are
-                                    //System.out.println("outletsUsedBeans.get(" +i+ ").getStoreVisits(): " + outletsUsedBeans.get(i).getStoreVisits()); 
-                                    //System.out.println("outletsUsedBeans.get(" +highestIndex+ ").getStoreVisits():highestIndex " + outletsUsedBeans.get(highestIndex).getStoreVisits()); 
-                                    if(outletsUsedBeans.get(i).getStoreVisits() > outletsUsedBeans.get(highestIndex).getStoreVisits())
-                                    { 
-                                        // is higher
-                                        //System.out.println("new highestIndex = " + i);
-                                        highestIndex = i;
-                                    }
-                                }
-                                // Now we know index of highest storevisits.
-                                // add to 2nd list
-                                outletsUsedBeansDescOrder.add(outletsUsedBeans.get(highestIndex));
-                                // remove it from first list.
-                                outletsUsedBeans.remove(highestIndex);
-                                
-                            //System.out.println("outletsUsedBeans.isEmpty(): "+outletsUsedBeans.isEmpty());
-                            } // end while()
-                            // end order outlet list. outletsUsedBeans
                                 
                             
                             
@@ -327,18 +294,53 @@
                                                     ) ) ) / pow; } 
                                 
                             }
+                    
+                            // Order the List of Outlets used. outletsUsedBeansDescOrder
+                            // Loop through all -> take highest, add in new. Again until list empty.
+                            while (!outletsUsedBeans.isEmpty()) // Loop through all outlets we have saved.
+                            {
+                                // Loop through all and extract highest.
+                                int highestIndex = -1;
+                                for (int i=0; i < outletsUsedBeans.size(); i++)
+                                {
+                                    // Set first as highest.
+                                    if(highestIndex == -1) {highestIndex = i;}
+                                    // Now check if 2nd/3rd etc is higher and set them as highest if they are
+                                    if(outletsUsedBeans.get(i).getStoreVisits() > outletsUsedBeans.get(highestIndex).getStoreVisits())
+                                    { 
+                                        // is higher
+                                        highestIndex = i;
+                                    }
+                                }
+                                // Now we know index of highest storevisits.
+                                // add to 2nd list
+                                outletsUsedBeansDescOrder.add(outletsUsedBeans.get(highestIndex));
+                                // remove it from first list.
+                                outletsUsedBeans.remove(highestIndex);
+                            } // end while()
+                            // end order outlet list. outletsUsedBeans
+                            
                         long endTime = System.nanoTime();
                         long elapsed = endTime - startTime;
                         System.out.println("Took~ " + elapsed/1000000000 + "seconds to load.");
                               %>
                               
-                              <a>Transactions: #<%=aTotalTransNumber%></a><br>
-                              <a>Total Cash Spent: £<%=aTotalCashSpent%></a><br>
-                              <a>Total Discount gotten: £<%=aTotalDiscountGotten%></a> <br>
-                              <a>Avg spent: £<%=aAvgSpent%></a><br>
-                              <a>Cash + Discount: £<%=aTotalCashDisc%></a><br>
-                              <a>Avg transaction per user: <%=aTotalTransNumber/amountOfUsers%></a><br>
-                              
+                              <a> Transactions: #<%=aTotalTransNumber%></a><br>
+                              <a> Total Cash Spent: £<%=aTotalCashSpent%></a><br>
+                              <a> Total Discount gotten: £<%=aTotalDiscountGotten%></a> <br>
+                              <a> Avg spent: £<%=aAvgSpent%></a><br>
+                              <a> Cash + Discount: £<%=aTotalCashDisc%></a><br>
+                              <a> Avg transaction per user: <%=aTotalTransNumber/amountOfUsers%></a><br><br>
+                              <% 
+                                    System.out.println("outletsUsedBeansDescOrder.size(): " + outletsUsedBeansDescOrder.size());
+                                    for (int io=0; io < outletsUsedBeansDescOrder.size(); io++)
+                                    { 
+                                        
+                                        %><a> <%=outletsUsedBeansDescOrder.get(io).getStoreVisits()%> transactions in </a><%
+                                        %><a> <%=outletsUsedBeansDescOrder.get(io).getStoreName()%> </a><br><%
+                                        
+                                    }
+                              %>
 
 
                             
