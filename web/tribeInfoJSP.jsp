@@ -1,7 +1,7 @@
 <%-- 
-    Document   : customerinfo
-    Created on : 26-Sep-2017, 10:08:44
-    Author     : Chris + Philipp
+    Document   : tribeInfoJSP.jsp
+    Created on : 29-Sep-2017, 01:44:44
+    Author     : Philipp
 --%>
 
 <%@page import="java.util.Iterator"%>
@@ -373,7 +373,6 @@
                         </tbody>
                     </table>
                     <script>
-                        // What are those?
                         $("#toggle").click(function () {
                             $("#togglesection").toggle("slow");
                         });

@@ -1,7 +1,7 @@
 <%-- 
     Document   : tribes
     Created on : 25-Sep-2017, 10:56:41
-    Author     : Think
+    Author     : Chris + Philipp
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,11 +9,16 @@
 <%@page import="org.json.JSONObject"%>
 <%@page import="java.util.*"%>
 <%@page import="java.util.Date"%>
-<%@ page import="java.util.Arrays" %>
+<%@page import="java.util.Arrays"%>
+<%@page import="Util.DBConnection"%>
+<%@page import="java.sql.*" %>
+<%@page import="Beans.PairBean"%> <!-- need keep? (prob make new bean) -->
+<%@page import="org.json.*" %>
 
 <!DOCTYPE html>
 <html>
     <head>
+        <%long startTime = System.nanoTime();%>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
         <title>NightOwls</title>
@@ -88,10 +93,11 @@
     </head>
     <body>
         <%@ include file="navbar.jsp"%>
+        <% String ID = request.getParameter("id");%><br/> <!-- Need? -->
         <div class="container" style="margin-top: 2.5%;">
             <div class="row">
                 <div class="col">
-                    <h1 class="display-4">Night Owls:</h1>
+                    <h1 class="display-4">Night Owls have many transactions after 17:00</h1>
                     <hr class="my-2"/>
                 </div>
             </div>
@@ -113,7 +119,6 @@
                             </thead>
                             <tbody>
                                 <tr>
-
                                     <td id="numoftribe"> </td>
                                     <td id="numofusers">7877 </td> 
                                 </tr>
@@ -139,6 +144,205 @@
                 </div>
             </div>
         </div>
+        <!-- 1 -->
+            <%
+                Connection conn = null;
+                conn = DBConnection.createConnection();
+                Statement stmt = null;
+                stmt = conn.createStatement();
+            %>
+        <!-- /1 -->
+        
+        
+        <hr class="my-2"/>
+            <div class="row">
+                <div class="col" id="toggle" style="cursor: pointer;">
+                    <h2> Transactions by Nightowls in any Store:)</h2><p class="text-muted">(Click to Show/Hide)</p>
+                    <hr class="my-2"/>
+                </div>
+            </div>
+               
+                        <%
+                    // Huge ass For loop start
+                    // Basically loop through every single user listed as Nightowl and then summate the results. List listOfJSONObjects = new LinkedList();
+                    List listWithUserIDsWhoAreOwls = new LinkedList();
+                    listWithUserIDsWhoAreOwls = (LinkedList)request.getAttribute("JSONListAttribute"); // This works. Actually it gets entire Nightowls table (but useless as has only 1st entry)
+                    //System.out.println("123" + listWithUserIDsWhoAreOwls.size() );
+            List listOfUserIDs = new LinkedList();
+            for (int fuck = 0; fuck < listWithUserIDsWhoAreOwls.size(); fuck++)
+            {        
+                JSONObject jsonObj = (JSONObject)listWithUserIDsWhoAreOwls.get(fuck); //request.getAttribute("JSONListAttribute");
+                
+                listOfUserIDs.add( jsonObj.getString("UserID")   );
+                //System.out.println("WTF JAVA: " + listOfUserIDs.get(fuck));
+            }    
+                    //System.out.println(jsonObj.getString("UserID") + "ASDF" + listOfUserIDs.get(0));
+                    //System.out.println(jsonObj.getString("UserID") );
+                    //JSONArray jarray = jsonObj.getJSONArray("UserID");
+                    //System.out.println("jarraylength: " + jarray.length());
+                    //System.out.println("333: " + jarray.getJSONObject(0).getString("UserID") ); // getString("UserID"));
+                    
+                    float aTotalTransNumber = 0;
+                    float aTotalCashSpent = 0;
+                    float aTotalDiscountGotten = 0;
+                    int amountOfUsers = listOfUserIDs.size();
+                    System.out.println("listOfUserIDs.size(): " + listOfUserIDs.size());
+                    
+                    
+                    
+                    for (int ii=0; ii < listOfUserIDs.size(); ii++)
+                    { //System.out.println("ii: " + ii);
+                    
+                                stmt = null;
+                                stmt = conn.createStatement();
+                                //System.out.println("VACHINA");
+                                String query7 = "SELECT * FROM disbursals WHERE UserID='" + listOfUserIDs.get(ii) + "' LIMIT 0, 1500;";
+                                //System.out.println("?A?A?A");
+                                ResultSet rs = null;
+                                rs = stmt.executeQuery(query7);
+                                float totalCashSpent = 0;
+                                int totalAmountOfTransactions = 0;
+                                float totalDiscountGotten = 0;
+                                float totalAmount = 0;
+                                float avgSpent = 0;
+                           
+                                List<PairBean> outletsUsedBeans = new LinkedList<PairBean>();
+                                List<PairBean> outletsUsedBeansDescOrder = new LinkedList<PairBean>();
+                              
+                                while (rs.next()) 
+                                {
+                                    // Add Outletname if not yet added.
+                                    String name = rs.getString("OutletName");
+                                    
+                                    // Bean version. outletsUsedBeans
+                                    boolean alreadyExists = false; // Assume it's not in list.
+                                    for (int j = 0; j < outletsUsedBeans.size(); j++) // Loop through entire list.
+                                    {
+                                        if (outletsUsedBeans.get(j).getStoreName().equals(name)){ // if the name is found in the List, set true to say we already have it.
+                                            alreadyExists = true;
+                                            // Increment amount of times user went to this store.
+                                            outletsUsedBeans.get(j).incrementStoreVisits();// setStoreVisits( outletsUsedBeans.get(i).getStoreVisits() + 1 );
+                                            break;
+                                        }
+                                    }
+                                    if (!alreadyExists) { // store not saved in List yet, so add it
+                                        PairBean pairBeanObj = new PairBean();
+                                        pairBeanObj.setStoreName(name);
+                                        pairBeanObj.setStoreVisits(1);
+                                        outletsUsedBeans.add(pairBeanObj);
+                                    }
+                                    
+                                    totalCashSpent      += rs.getFloat("CashSpent");
+                                    totalDiscountGotten += rs.getFloat("Discount");
+                                    
+                                    totalAmountOfTransactions += 1;
+                                }
+                                totalAmount = totalCashSpent+totalDiscountGotten;
+                                //avgSpent = totalCashSpent / totalAmountOfTransactions;
+                                
+                             
+
+                            // Order the List of Outlets used. outletsUsedBeansDescOrder
+                            
+                            // Loop through all -> take highest, add in new. Again until list empty.
+                            
+                            while (!outletsUsedBeans.isEmpty()) // Loop through all outlets we have saved.
+                            {
+                                //System.out.println("=== New While Loop ===");
+                            
+                                // Loop through all and extract highest.
+                                int highestIndex = -1;
+                                for (int i=0; i < outletsUsedBeans.size(); i++)
+                                {
+                                    // Set first as highest.
+                                    if(highestIndex == -1) {highestIndex = i;}
+                                    // Now check if 2nd/3rd etc is higher and set them as highest if they are
+                                    //System.out.println("outletsUsedBeans.get(" +i+ ").getStoreVisits(): " + outletsUsedBeans.get(i).getStoreVisits()); 
+                                    //System.out.println("outletsUsedBeans.get(" +highestIndex+ ").getStoreVisits():highestIndex " + outletsUsedBeans.get(highestIndex).getStoreVisits()); 
+                                    if(outletsUsedBeans.get(i).getStoreVisits() > outletsUsedBeans.get(highestIndex).getStoreVisits())
+                                    { 
+                                        // is higher
+                                        //System.out.println("new highestIndex = " + i);
+                                        highestIndex = i;
+                                    }
+                                }
+                                // Now we know index of highest storevisits.
+                                // add to 2nd list
+                                outletsUsedBeansDescOrder.add(outletsUsedBeans.get(highestIndex));
+                                // remove it from first list.
+                                outletsUsedBeans.remove(highestIndex);
+                                
+                            //System.out.println("outletsUsedBeans.isEmpty(): "+outletsUsedBeans.isEmpty());
+                            } // end while()
+                            // end order outlet list. outletsUsedBeans
+                                
+                            
+                            
+                                // outletsUsedBeansDescOrder.get(i).getStoreVisits()
+                                // outletsUsedBeansDescOrder.get(i).getStoreVisits()
+                    //System.out.println("totalAmountOfTransactions at ii="+ii + " : " + totalAmountOfTransactions);
+                    aTotalTransNumber += totalAmountOfTransactions; 
+                    aTotalCashSpent += totalCashSpent;
+                    aTotalDiscountGotten += totalDiscountGotten;
+                    
+                    } // end of biggest for loop ever?
+                    
+                    System.out.println("fek fek fek");
+                    System.out.println("AAAAAA" + aTotalTransNumber);
+                    conn.close();
+                    float aTotalCashDisc = aTotalCashSpent + aTotalDiscountGotten;
+                    float aAvgSpent = aTotalCashSpent/aTotalTransNumber;
+                    // Format £ amounts to 2 decimal places.
+                    for (int a=0; a < 4; a++)
+                            {   float value = 0;
+                                if(a==0) { value = aTotalCashSpent; }
+                                if(a==1) { value = aTotalDiscountGotten; }
+                                if(a==2) { value = aTotalCashDisc; }
+                                if(a==3) { value = aAvgSpent; }
+                                int pow = 100;
+                                float tmp = value * pow;
+                                float tmpSub = tmp - (int) tmp;
+
+                                if(a==0) 
+                                { aTotalCashSpent = ( (float) ( (int) (
+                                                    value >= 0
+                                                    ? (tmpSub >= 0.5f ? tmp + 1 : tmp)
+                                                    : (tmpSub >= -0.5f ? tmp : tmp - 1)
+                                                    ) ) ) / pow; 
+                                }
+                                if(a==1) { aTotalDiscountGotten = ( (float) ( (int) (
+                                                    value >= 0
+                                                    ? (tmpSub >= 0.5f ? tmp + 1 : tmp)
+                                                    : (tmpSub >= -0.5f ? tmp : tmp - 1)
+                                                    ) ) ) / pow; }
+                                if(a==2) { aTotalCashDisc = ( (float) ( (int) (
+                                                    value >= 0
+                                                    ? (tmpSub >= 0.5f ? tmp + 1 : tmp)
+                                                    : (tmpSub >= -0.5f ? tmp : tmp - 1)
+                                                    ) ) ) / pow; } 
+                                if(a==3) { aAvgSpent = ( (float) ( (int) (
+                                                    value >= 0
+                                                    ? (tmpSub >= 0.5f ? tmp + 1 : tmp)
+                                                    : (tmpSub >= -0.5f ? tmp : tmp - 1)
+                                                    ) ) ) / pow; } 
+                                
+                            }
+                        long endTime = System.nanoTime();
+                        long elapsed = endTime - startTime;
+                        System.out.println("Took~ " + elapsed/1000000000 + "seconds to load.");
+                              %>
+                              
+                              <a>Transactions: #<%=aTotalTransNumber%></a><br>
+                              <a>Total Cash Spent: £<%=aTotalCashSpent%></a><br>
+                              <a>Total Discount gotten: £<%=aTotalDiscountGotten%></a> <br>
+                              <a>Avg spent: £<%=aAvgSpent%></a><br>
+                              <a>Cash + Discount: £<%=aTotalCashDisc%></a><br>
+                              <a>Avg transaction per user: <%=aTotalTransNumber/amountOfUsers%></a><br>
+                              
+
+
+                            
+                        
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.2/vivus.min.js" integrity="sha256-QkfKcx3kugootBtJEPpTKDsWEneddME3kXPoT5o3Yic=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

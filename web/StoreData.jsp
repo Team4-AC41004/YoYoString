@@ -5,7 +5,6 @@
 --%>
 
 <%@page import="Util.DBConnection"%>
-<%@page import="com.mysql.jdbc.log.Log"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 
